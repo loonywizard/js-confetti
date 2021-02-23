@@ -1,6 +1,3 @@
-import { IPosition, IRGBColor } from './types'
-import { generateRandomRGBColor } from './generateRandomRGBColor'
-import { generateCanvasFillStyle } from './generateCanvasFillStyle'
 import { fixDPR } from './fixDPR'
 import { ConfettiShape } from './ConfettiShape'
 
@@ -21,17 +18,17 @@ function init() {
 
   fixDPR(canvas)
 
-  function drawShapes() {
+  function loop() {
     // TODO: remove cast
     fixDPR(<HTMLCanvasElement>canvas)
     shapes.forEach((shape) => {
       shape.updatePosition()
       shape.draw(canvasContext)
     })
-    setTimeout(drawShapes, 0)
+    setTimeout(loop, 0)
   }
 
-  setTimeout(drawShapes, 0)
+  setTimeout(loop, 0)
 }
 
 window.onload = init
