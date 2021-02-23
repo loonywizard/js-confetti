@@ -43,7 +43,7 @@ class ConfettiShape {
     this.position.x += Math.cos(angle) * timeDelta * speedX
     this.position.y += Math.sin(angle) * timeDelta * speedY
 
-    this.speedY -= 0.005
+    this.speedY -= 0.0005 * timeDelta
   }
 }
 
