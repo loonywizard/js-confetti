@@ -11,9 +11,12 @@ function init() {
 
   document.body.addEventListener('click', (event: MouseEvent) => {
     console.log(`Cliked on ${event.pageX} ${event.pageY}`)
-    const position = { x: event.pageX, y: event.pageY }
     
-    shapes.push(new ConfettiShape(position))
+    for (let i = 0; i < 50; i++) {
+      const position = { x: event.pageX, y: event.pageY }
+    
+      shapes.push(new ConfettiShape(position))
+    }
   })
 
   fixDPR(canvas)
