@@ -1,4 +1,5 @@
 import { IPosition, IRGBColor } from './types'
+import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomRGBColor } from './generateRandomRGBColor'
 import { generateCanvasFillStyle } from './generateCanvasFillStyle'
 
@@ -6,16 +7,18 @@ import { generateCanvasFillStyle } from './generateCanvasFillStyle'
 class ConfettiShape {
   speed: number
   radius: number
-  // angle: number
+  angle: number
   position: IPosition
   color: IRGBColor
+  lastUpdated: number
 
   constructor(position: IPosition) {
-    this.speed = 100
+    this.speed = 0.1
     this.radius = 10
-    // this.angle = angle
+    this.angle = generateRandomNumber(-120, -60) * Math.PI / 180
     this.position = position
     this.color = generateRandomRGBColor()
+    this.lastUpdated = new Date().getTime()
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
@@ -31,7 +34,16 @@ class ConfettiShape {
     canvasContext.fill()
   }
 
-  // updatePosition() {}
+  updatePosition(): void {
+    const { lastUpdated, speed, angle } = this
+    const currentTime = new Date().getTime()
+    const timeDelta = currentTime - lastUpdated
+    
+    this.position.x += Math.cos(angle) * timeDelta * speed
+    this.position.y += Math.sin(angle) * timeDelta * speed
+
+    this.lastUpdated = currentTime
+  }
 }
 
 export { ConfettiShape }

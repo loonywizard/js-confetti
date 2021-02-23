@@ -24,7 +24,10 @@ function init() {
   function drawShapes() {
     // TODO: remove cast
     fixDPR(<HTMLCanvasElement>canvas)
-    shapes.forEach((shape) => shape.draw(canvasContext))
+    shapes.forEach((shape) => {
+      shape.updatePosition()
+      shape.draw(canvasContext)
+    })
     setTimeout(drawShapes, 0)
   }
 
