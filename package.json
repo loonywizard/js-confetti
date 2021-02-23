@@ -11,7 +11,7 @@
   "author": "Vladimir Nikitin vladimirsuperwizard@gmail.com",
   "homepage": "https://github.com/loonywizard/js-confetti",
   "scripts": {
-    "dev": "NODE_ENV=development webpack serve",
+    "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
     "build": "NODE_ENV=production webpack",
     "lint": "eslint src --ext .ts"
   },

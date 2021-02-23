@@ -2,13 +2,14 @@
 
 import { Configuration } from 'webpack'
 import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
-const isProd = process.env.NODE_ENV === 'production'
 
 const config: Configuration = {
-  mode: isProd ? 'production' : 'development',
-  entry: './src/index.ts',
+  mode: 'development',
+  entry: './example/index.ts',
   output: {
     filename: '[name][contenthash].js',
     path: path.resolve(__dirname, 'dist'),
@@ -26,8 +27,17 @@ const config: Configuration = {
     extensions: ['.ts', '.js'],
   },
   plugins: [
+    new HtmlWebpackPlugin({ template: './assets/index.html' }), 
     new ForkTsCheckerWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'static' }],
+    })
   ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
+  }
 }
 
 module.exports = config
