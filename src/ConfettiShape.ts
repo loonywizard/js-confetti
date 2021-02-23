@@ -5,16 +5,21 @@ import { generateCanvasFillStyle } from './generateCanvasFillStyle'
 
 
 class ConfettiShape {
-  speed: number
+  speedX: number
+  speedY: number
+
   radius: number
   angle: number
   position: IPosition
   color: IRGBColor
 
-  constructor(position: IPosition) {
-    this.speed = 0.1 * generateRandomNumber(300, 500) / 100
+  constructor(position: IPosition, direction: 'left' | 'right') {
+    this.speedX = 0.1 * generateRandomNumber(500, 900) / 100
+    this.speedY = 0.1 * generateRandomNumber(500, 900) / 100
     this.radius = 10
-    this.angle = generateRandomNumber(-120, -60) * Math.PI / 180
+    this.angle = direction === 'left' 
+      ? generateRandomNumber(-140, 0) * Math.PI / 180
+      : generateRandomNumber(0, -140) * Math.PI / 180
     this.position = { ...position }
     this.color = generateRandomRGBColor()
   }
@@ -33,10 +38,12 @@ class ConfettiShape {
   }
 
   updatePosition(timeDelta: number): void {
-    const { speed, angle } = this
+    const { speedX, speedY, angle } = this
     
-    this.position.x += Math.cos(angle) * timeDelta * speed
-    this.position.y += Math.sin(angle) * timeDelta * speed
+    this.position.x += Math.cos(angle) * timeDelta * speedX
+    this.position.y += Math.sin(angle) * timeDelta * speedY
+
+    this.speedY -= 0.005
   }
 }
 

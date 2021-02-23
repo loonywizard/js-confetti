@@ -7,12 +7,8 @@ function init() {
 
   const jsConfetti = new JSConfetti(canvas)
 
-  function onClickHandler(event: MouseEvent) {
-    console.log(`Cliked on ${event.pageX} ${event.pageY}`)
-    
-    const position = { x: event.pageX, y: event.pageY }
-    
-    jsConfetti.addConfetti(position)
+  function onClickHandler() {
+    jsConfetti.addConfetti()
   }
 
   document.body.addEventListener('click', onClickHandler)

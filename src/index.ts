@@ -21,7 +21,7 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this), 0)
   }
 
-  loop() {
+  loop(): void {
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
@@ -37,32 +37,23 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this), 0)
   }
 
-  addConfetti(position: IPosition) {
+  addConfetti(): void {
+    const yPosition = window.innerHeight * 5 / 7
+    const leftConfettiesPosition: IPosition = {
+      x: 0,
+      y: yPosition,
+    }
+    const rightConfettiesPosition: IPosition = {
+      x: window.innerWidth,
+      y: yPosition,
+    }
+
     for (let i = 0; i < 50; i++) {
-      this.shapes.push(new ConfettiShape(position))
+      this.shapes.push(new ConfettiShape(leftConfettiesPosition, 'right'))
+      this.shapes.push(new ConfettiShape(rightConfettiesPosition, 'left'))
     }
   }
 }
 
 export default JSConfetti
 
-// function init() {
-//   const canvas = <HTMLCanvasElement | null>document.getElementById('canvas')
-  
-//   if (canvas === null) return
-
-//   const jsConfetti = new JSConfetti(canvas)
-
-//   function onClickHandler(event: MouseEvent) {
-//     console.log(`Cliked on ${event.pageX} ${event.pageY}`)
-    
-//     const position = { x: event.pageX, y: event.pageY }
-    
-//     jsConfetti.addConfetti(position)
-//   }
-
-//   document.body.addEventListener('click', onClickHandler)
-// }
-
-
-// window.onload = init
