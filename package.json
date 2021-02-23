@@ -1,8 +1,8 @@
 {
-  "name": "@loonywizard/js-confetti",
+  "name": "js-confetti",
   "version": "0.0.0",
   "license": "MIT",
-  "description": "...",
+  "description": "js-confetti",
   "main": "src/index.ts",
   "repository": {
     "type": "git",
