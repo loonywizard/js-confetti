@@ -13,7 +13,7 @@ class ConfettiShape {
   lastUpdated: number
 
   constructor(position: IPosition) {
-    this.speed = 0.1
+    this.speed = 0.1 * generateRandomNumber(300, 500) / 100
     this.radius = 10
     this.angle = generateRandomNumber(-120, -60) * Math.PI / 180
     this.position = position
