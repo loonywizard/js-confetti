@@ -1,6 +1,6 @@
 {
   "name": "js-confetti",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "description": "js-confetti",
   "main": "dist/index.js",
