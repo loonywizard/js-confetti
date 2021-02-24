@@ -1,12 +1,18 @@
-import { IRGBColor } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 
-function generateRandomRGBColor(): IRGBColor {
-  const red = generateRandomNumber(0, 255)
-  const green = generateRandomNumber(0, 255)
-  const blue = generateRandomNumber(0, 255)
+const RGBColors = [
+  '#fcf403',
+  '#62fc03',
+  '#f4fc03',
+  '#03e7fc',
+  '#03fca5',
+  '#a503fc',
+  '#fc03ad',
+  '#fc9003',
+]
 
-  return { red, green, blue }
+function generateRandomRGBColor(): string {
+  return RGBColors[generateRandomNumber(0, RGBColors.length - 1)]
 }
 
 export { generateRandomRGBColor }

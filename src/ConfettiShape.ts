@@ -1,7 +1,6 @@
-import { IPosition, IRGBColor } from './types'
+import { IPosition } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomRGBColor } from './generateRandomRGBColor'
-import { generateCanvasFillStyle } from './generateCanvasFillStyle'
 
 
 class ConfettiShape {
@@ -11,7 +10,7 @@ class ConfettiShape {
   radius: number
   angle: number
   position: IPosition
-  color: IRGBColor
+  color: string
 
   constructor(position: IPosition, direction: 'left' | 'right') {
     this.speedX = 0.1 * generateRandomNumber(500, 900) / 100
@@ -28,7 +27,7 @@ class ConfettiShape {
     const { position, radius, color } = this
     const dpr = window.devicePixelRatio
 
-    canvasContext.fillStyle = generateCanvasFillStyle(color)
+    canvasContext.fillStyle = color
     
     canvasContext.beginPath()
     canvasContext.arc(

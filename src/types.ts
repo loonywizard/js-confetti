@@ -3,10 +3,4 @@ interface IPosition {
   y: number,
 }
 
-interface IRGBColor {
-  red: number,
-  green: number,
-  blue: number,
-}
-
-export { IPosition, IRGBColor }
+export { IPosition }
