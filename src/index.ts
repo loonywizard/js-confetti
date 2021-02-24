@@ -17,6 +17,8 @@ class JSConfetti {
     this.canvas.style.position = 'absolute'
     this.canvas.style.width = '100%'
     this.canvas.style.height = '100%'
+    this.canvas.style.top = '0'
+    this.canvas.style.left = '0'
     this.canvas.style.zIndex = '1000'
     this.canvas.style.pointerEvents = 'none'
     
