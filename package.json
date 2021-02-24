@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "license": "MIT",
   "description": "js-confetti",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/loonywizard/js-confetti.git"
