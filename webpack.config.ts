@@ -13,6 +13,7 @@ const config: Configuration = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     library: 'jsConfetti',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
