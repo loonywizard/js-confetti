@@ -1,18 +1,15 @@
 # js-confetti
 
-## Project setup
+## Usage
 
-### Install dependencies
-```
-yarn
-```
+```js
+import JSConfetti from 'js-confetti'
 
-### Run
-```
-yarn dev
+const jsConfetti = new JSConfetti()
+
+jsConfetti.addConfetti()
 ```
 
-### Lint
-```
-yarn lint
-```
+## Warning!
+
+Work in Progress
