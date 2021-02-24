@@ -56,4 +56,3 @@ class JSConfetti {
 }
 
 export default JSConfetti
-

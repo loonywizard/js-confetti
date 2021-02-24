@@ -10,9 +10,12 @@
   },
   "author": "Vladimir Nikitin vladimirsuperwizard@gmail.com",
   "homepage": "https://github.com/loonywizard/js-confetti",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production webpack --config webpack.config.ts",
     "lint": "eslint src --ext .ts"
   },
   "devDependencies": {
@@ -27,6 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "babel-loader": "^8.2.1",
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
     "eslint": "^7.14.0",
     "eslint-plugin-import": "^2.22.1",

@@ -3,15 +3,16 @@
 import { Configuration } from 'webpack'
 import path from 'path'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
-const isProd = process.env.NODE_ENV === 'production'
 
 const config: Configuration = {
-  mode: isProd ? 'production' : 'development',
+  mode: 'production',
   entry: './src/index.ts',
   output: {
-    filename: '[name][contenthash].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
+    library: 'jsConfetti',
   },
   module: {
     rules: [
@@ -27,6 +28,7 @@ const config: Configuration = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
+    new CleanWebpackPlugin(),
   ],
 }
 
