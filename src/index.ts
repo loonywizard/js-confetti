@@ -10,9 +10,19 @@ class JSConfetti {
   shapes: ConfettiShape[]
   lastUpdated: number
 
-  constructor(canvas: HTMLCanvasElement) {
-    this.canvas = canvas
-    this.canvasContext = <CanvasRenderingContext2D>canvas.getContext('2d')
+  constructor() {
+    
+    this.canvas = document.createElement('canvas')
+    
+    this.canvas.style.position = 'absolute'
+    this.canvas.style.width = '100%'
+    this.canvas.style.height = '100%'
+    this.canvas.style.zIndex = '1000'
+    this.canvas.style.pointerEvents = 'none'
+    
+    document.body.appendChild(this.canvas)
+
+    this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
 
     this.shapes = []
 

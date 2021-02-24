@@ -1,11 +1,7 @@
 import JSConfetti from '../src/index'
 
 function init() {
-  const canvas = <HTMLCanvasElement | null>document.getElementById('canvas')
-  
-  if (canvas === null) return
-
-  const jsConfetti = new JSConfetti(canvas)
+  const jsConfetti = new JSConfetti()
 
   function onClickHandler() {
     jsConfetti.addConfetti()
