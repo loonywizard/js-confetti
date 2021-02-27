@@ -27,7 +27,7 @@ class ConfettiShape {
   direction: 'left' | 'right'
 
   constructor(initialPosition: IPosition, direction: 'left' | 'right') {
-    const initialSpeed = 0.2 * generateRandomNumber(500, 900) / 100
+    const initialSpeed = generateRandomNumber(100, 180) / 100 * Math.log(window.innerWidth) / 7.5
     
     this.speed = {
       x: initialSpeed,
