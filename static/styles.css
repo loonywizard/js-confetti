@@ -10,3 +10,16 @@ body {
 * {
   box-sizing: border-box;
 }
+
+
+.container {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.item {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  text-align: center;
+}
