@@ -1,5 +1,6 @@
 import { fixDPR } from './fixDPR'
 import { ConfettiShape } from './ConfettiShape'
+import { createCanvas } from './createCanvas'
 import { IPosition } from './types'
 
 
@@ -11,19 +12,7 @@ class JSConfetti {
   lastUpdated: number
 
   constructor() {
-    
-    this.canvas = document.createElement('canvas')
-    
-    this.canvas.style.position = 'absolute'
-    this.canvas.style.width = '100%'
-    this.canvas.style.height = '100%'
-    this.canvas.style.top = '0'
-    this.canvas.style.left = '0'
-    this.canvas.style.zIndex = '1000'
-    this.canvas.style.pointerEvents = 'none'
-    
-    document.body.appendChild(this.canvas)
-
+    this.canvas = createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
 
     this.shapes = []
