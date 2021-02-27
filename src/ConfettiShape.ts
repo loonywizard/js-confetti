@@ -5,6 +5,7 @@ import { generateRandomRGBColor } from './generateRandomRGBColor'
 
 const FREE_FALLING_OBJECT_ACCELERATION = 0.0006
 const DRAG_FORCE_COEFFICIENT = 0.00025
+const ROTATION_SLOWDOWN_ACCELERATION = 0.00001
 
 class ConfettiShape {
   speed: ISpeed
@@ -75,6 +76,7 @@ class ConfettiShape {
     } = this
 
     const timeDeltaSinceCreation = currentTime - createdAt
+    this.rotationSpeed -= ROTATION_SLOWDOWN_ACCELERATION * iterationTimeDelta
     
     if (speed.x > 0.0001) this.speed.x -= DRAG_FORCE_COEFFICIENT * iterationTimeDelta
     this.currentPosition.x += speed.x * Math.cos(angle) * iterationTimeDelta
