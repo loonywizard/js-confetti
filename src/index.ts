@@ -9,15 +9,12 @@ class JSConfetti {
   canvasContext: CanvasRenderingContext2D
 
   shapes: ConfettiShape[]
-  lastUpdated: number
 
   constructor() {
     this.canvas = createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
 
     this.shapes = []
-
-    this.lastUpdated = new Date().getTime()
 
     setTimeout(() => this.loop.call(this), 0)
   }
@@ -26,14 +23,11 @@ class JSConfetti {
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
-    const timeDelta = currentTime - this.lastUpdated
 
     this.shapes.forEach((shape) => {
-      shape.updatePosition(timeDelta)
+      shape.updatePosition(currentTime)
       shape.draw(this.canvasContext)
     })
-
-    this.lastUpdated = currentTime
 
     setTimeout(() => this.loop.call(this), 0)
   }

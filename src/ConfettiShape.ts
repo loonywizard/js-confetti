@@ -1,27 +1,31 @@
-import { IPosition, ISpeed, IRadius } from './types'
+import { IPosition, IRadius } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomRGBColor } from './generateRandomRGBColor'
 
 
+const FREE_FALLING_OBJECT_ACCELERATION = 0.0006
+
 class ConfettiShape {
-  speed: ISpeed
+  initialSpeed: number
   rotationSpeed: number
 
   radius: IRadius
 
   angle: number
-  position: IPosition
+  
+  currentPosition: IPosition
+  initialPosition: IPosition
+  
   color: string
 
   radiusYUpdateDirection: 'up' | 'down'
 
-  constructor(position: IPosition, direction: 'left' | 'right') {
-    this.speed = {
-      x: 0.1 * generateRandomNumber(500, 900) / 100,
-      y: 0.1 * generateRandomNumber(500, 900) / 100,
-    }
+  createdAt: number
 
-    this.rotationSpeed = 0.1 * generateRandomNumber(20, 1000) / 100
+  constructor(position: IPosition, direction: 'left' | 'right') {
+    this.initialSpeed = 0.1 * generateRandomNumber(500, 900) / 100
+
+    this.rotationSpeed = 0.0001 * generateRandomNumber(3, 10)
 
     this.radius = {
       x: 10, y: 10
@@ -32,12 +36,15 @@ class ConfettiShape {
       ? generateRandomNumber(-140, 0) * Math.PI / 180
       : generateRandomNumber(0, -140) * Math.PI / 180
 
-    this.position = { ...position }
+    this.currentPosition = { ...position }
+    this.initialPosition = { ...position }
     this.color = generateRandomRGBColor()
+
+    this.createdAt = new Date().getTime()
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
-    const { position, radius, color } = this
+    const { currentPosition, radius, color } = this
     const dpr = window.devicePixelRatio
 
     canvasContext.fillStyle = color
@@ -45,35 +52,47 @@ class ConfettiShape {
     canvasContext.beginPath()
 
     canvasContext.ellipse(
-      position.x * dpr, position.y * dpr, radius.x * dpr, radius.y * dpr,
+      currentPosition.x * dpr, currentPosition.y * dpr, radius.x * dpr, radius.y * dpr,
       0, 0, 2 * Math.PI,
     )
     canvasContext.fill()
   }
 
-  updatePosition(timeDelta: number): void {
-    const { speed, angle, radiusYUpdateDirection, rotationSpeed } = this
+  updatePosition(currentTime: number): void {
+    const { 
+      initialSpeed, 
+      initialPosition,
+      angle, 
+      radiusYUpdateDirection, 
+      rotationSpeed,
+      createdAt, 
+    } = this
+
+    const timeDelta = currentTime - createdAt
     
-    this.position.x += Math.cos(angle) * timeDelta * speed.x
-    this.position.y += Math.sin(angle) * timeDelta * speed.y
+    this.currentPosition.x = (
+      initialPosition.x
+      + initialSpeed * Math.cos(angle) * timeDelta
+    )
+    this.currentPosition.y = (
+      initialPosition.y 
+      + initialSpeed * Math.sin(angle) * timeDelta
+      + FREE_FALLING_OBJECT_ACCELERATION * (timeDelta ** 2) / 2
+    )
 
     if (radiusYUpdateDirection === 'down') {
-      this.radius.y -= timeDelta * rotationSpeed * 0.1
+      this.radius.y -= timeDelta * rotationSpeed
       if (this.radius.y <= 0) {
         this.radius.y = 0
         this.radiusYUpdateDirection = 'up'
       }
     } else {
-      this.radius.y += timeDelta * rotationSpeed * 0.1
+      this.radius.y += timeDelta * rotationSpeed
       if (this.radius.y >= 10) {
         this.radius.y = 10
         this.radiusYUpdateDirection = 'down'
       }
     }
-
-    this.speed.y -= 0.0005 * timeDelta
-    if (this.speed.x < 0.01) this.speed.x = 0
-    else this.speed.x -= 0.00025 * timeDelta
   }
 }
 
