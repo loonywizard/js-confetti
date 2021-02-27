@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
 ![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
 
-🎉 JS Confetti library with zero dependencies. Supports mobile devices
+🎉 JS Confetti library with zero dependencies
 
 Demo: https://loonywizard.github.io/js-confetti/
 
