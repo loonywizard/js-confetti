@@ -1,7 +1,7 @@
 function createCanvas(): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
     
-  canvas.style.position = 'absolute'
+  canvas.style.position = 'fixed'
   canvas.style.width = '100%'
   canvas.style.height = '100%'
   canvas.style.top = '0'
