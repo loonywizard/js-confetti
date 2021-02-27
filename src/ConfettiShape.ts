@@ -99,6 +99,10 @@ class ConfettiShape {
       }
     }
   }
+
+  getIsVisibleOnCanvas(canvasHeight: number): boolean {
+    return this.currentPosition.y < canvasHeight + 100
+  }
 }
 
 export { ConfettiShape }

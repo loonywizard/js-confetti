@@ -19,23 +19,28 @@ class JSConfetti {
 
     this.lastUpdated = new Date().getTime()
 
-    setTimeout(() => this.loop.call(this), 0)
+    setTimeout(() => this.loop.call(this, 0), 0)
   }
 
-  loop(): void {
+  loop(iterationIndex: number): void {
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
     const timeDelta = currentTime - this.lastUpdated
+    const canvasHeight = this.canvas.offsetHeight
 
     this.shapes.forEach((shape) => {
       shape.updatePosition(timeDelta, currentTime)
       shape.draw(this.canvasContext)
     })
 
+    if (iterationIndex % 100 === 0) {
+      this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(canvasHeight))
+    }
+
     this.lastUpdated = currentTime
 
-    setTimeout(() => this.loop.call(this), 0)
+    setTimeout(() => this.loop.call(this, ++iterationIndex), 0)
   }
 
   addConfetti(): void {
