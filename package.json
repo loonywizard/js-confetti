@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
     "build": "NODE_ENV=production webpack --config webpack.config.ts",
+    "build-example": "NODE_ENV=production webpack --config webpack.config.example.ts",
     "lint": "eslint src --ext .ts"
   },
   "devDependencies": {

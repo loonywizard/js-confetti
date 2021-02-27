@@ -6,13 +6,14 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
+const isProd = process.env.NODE_ENV === 'production'
 
 const config: Configuration = {
-  mode: 'development',
+  mode: isProd ? 'production' : 'development',
   entry: './example/index.ts',
   output: {
     filename: '[name][contenthash].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'example_dist'),
   },
   module: {
     rules: [
@@ -33,10 +34,13 @@ const config: Configuration = {
       patterns: [{ from: 'static' }],
     })
   ],
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+}
+
+if (!isProd) {
+  config.devServer = {
+    contentBase: path.join(__dirname, 'example_dist'),
     compress: true,
-    port: 9000,
+    port: 9000
   }
 }
 

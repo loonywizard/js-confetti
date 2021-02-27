@@ -1,4 +1,5 @@
 node_modules
 .idea
 dist
+example_dist
 .DS_Store
