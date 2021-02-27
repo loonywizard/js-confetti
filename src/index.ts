@@ -28,9 +28,10 @@ class JSConfetti {
     const currentTime = new Date().getTime()
     const timeDelta = currentTime - this.lastUpdated
     const canvasHeight = this.canvas.offsetHeight
+    const canvasWidth = this.canvas.offsetWidth
 
     this.shapes.forEach((shape) => {
-      shape.updatePosition(timeDelta, currentTime)
+      shape.updatePosition(timeDelta, currentTime, canvasWidth)
       shape.draw(this.canvasContext)
     })
 
