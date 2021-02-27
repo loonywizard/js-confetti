@@ -7,4 +7,6 @@ type IPosition = I2DCoordinates
 
 type IRadius = I2DCoordinates
 
-export { IPosition, IRadius }
+type ISpeed = I2DCoordinates
+
+export { IPosition, IRadius, ISpeed }
