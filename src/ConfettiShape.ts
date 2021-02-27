@@ -31,7 +31,7 @@ class ConfettiShape {
     this.angle = direction === 'left' 
       ? generateRandomNumber(-140, 0) * Math.PI / 180
       : generateRandomNumber(0, -140) * Math.PI / 180
-      
+
     this.position = { ...position }
     this.color = generateRandomRGBColor()
   }
@@ -72,6 +72,8 @@ class ConfettiShape {
     }
 
     this.speed.y -= 0.0005 * timeDelta
+    if (this.speed.x < 0.01) this.speed.x = 0
+    else this.speed.x -= 0.00025 * timeDelta
   }
 }
 
