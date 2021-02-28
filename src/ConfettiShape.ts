@@ -1,4 +1,4 @@
-import { IPosition, IRadius, ISpeed } from './types'
+import { IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomRGBColor } from './generateRandomRGBColor'
 
@@ -7,13 +7,37 @@ const FREE_FALLING_OBJECT_ACCELERATION = 0.00125
 const DRAG_FORCE_COEFFICIENT = 0.0008
 const ROTATION_SLOWDOWN_ACCELERATION = 0.00001
 
+const INITIAL_SHAPE_RADIUS = 10
+
+const MIN_INITIAL_CONFETTI_SPEED = 0.9
+const MAX_INITIAL_CONFETTI_SPEED = 1.7
+
+const MIN_INITIAL_ROTATION_SPEED = 0.03
+const MAX_INITIAL_ROTATION_SPEED = 0.10
+
+const MIN_CONFETTI_ANGLE = 15
+const MAX_CONFETTI_ANGLE = 82
+
+const MAX_CONFETTI_POSITION_SHIFT = 150
+
+const SHAPE_VISIBILITY_TRESHOLD = 100
+
+// For wide screens - fast confetties, for small screens - slow confetties
+function getWindowWidthCoefficient() {
+  const HD_SCREEN_WIDTH = 1920
+
+  return Math.log(window.innerWidth) / Math.log(HD_SCREEN_WIDTH)
+}
+
 class ConfettiShape {
-  speed: ISpeed
+  confettiSpeed: ISpeed
   rotationSpeed: number
 
   radius: IRadius
-
-  angle: number
+  
+  // We can calculate absolute cos and sin at shape init
+  absCos: number
+  absSin: number
   
   initialPosition: IPosition
   currentPosition: IPosition
@@ -24,32 +48,37 @@ class ConfettiShape {
 
   createdAt: number
   
-  direction: 'left' | 'right'
+  direction: TConfettiDirection
 
-  constructor(initialPosition: IPosition, direction: 'left' | 'right') {
-    const initialSpeed = generateRandomNumber(100, 180) / 100 * Math.log(window.innerWidth) / 7.5
+  constructor(initialPosition: IPosition, direction: TConfettiDirection) {
+    const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
+    const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
     
-    this.speed = {
+    this.confettiSpeed = {
       x: initialSpeed,
       y: initialSpeed,
     }
 
-    this.rotationSpeed = 0.01 * generateRandomNumber(3, 10)
+    this.rotationSpeed = generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3)
 
     this.radius = {
-      x: 10, y: 10
+      x: INITIAL_SHAPE_RADIUS, y: INITIAL_SHAPE_RADIUS
     }
 
     this.radiusYUpdateDirection = 'down'
-    this.angle = direction === 'left' 
-      ? generateRandomNumber(82, 15) * Math.PI / 180
-      : generateRandomNumber(-15, -82) * Math.PI / 180
+    
+    const angle = direction === 'left' 
+      ? generateRandomNumber(MAX_CONFETTI_ANGLE, MIN_CONFETTI_ANGLE) * Math.PI / 180
+      : generateRandomNumber(-MIN_CONFETTI_ANGLE, -MAX_CONFETTI_ANGLE) * Math.PI / 180
 
-    const positionShift = generateRandomNumber(-150, 0)
+    this.absCos = Math.abs(Math.cos(angle))
+    this.absSin = Math.abs(Math.sin(angle))
+
+    const positionShift = generateRandomNumber(-MAX_CONFETTI_POSITION_SHIFT, 0)
 
     const shiftedInitialPosition = {
-      x: initialPosition.x + (direction === 'right' ? positionShift : -positionShift) * Math.abs(Math.cos(this.angle)),
-      y: initialPosition.y - positionShift * Math.abs(Math.sin(this.angle)),
+      x: initialPosition.x + (direction === 'left' ? -positionShift : positionShift) * this.absCos,
+      y: initialPosition.y - positionShift * this.absSin,
     }
 
     this.currentPosition = { ...shiftedInitialPosition }
@@ -78,8 +107,7 @@ class ConfettiShape {
 
   updatePosition(iterationTimeDelta: number, currentTime: number, canvasWidth: number): void {
     const { 
-      speed, 
-      angle, 
+      confettiSpeed, 
       radiusYUpdateDirection, 
       rotationSpeed,
       createdAt,
@@ -91,37 +119,40 @@ class ConfettiShape {
 
     if (this.rotationSpeed < 0) this.rotationSpeed = 0
     
-    // Do not update speed while confetti is invisible
+    // Do not update confettiSpeed while confetti is invisible
     const needUpdateSpeed = (
       direction === 'left' ? this.currentPosition.x >= 0 : this.currentPosition.x <= canvasWidth
     )
     
-    if (needUpdateSpeed && speed.x > 0.0001) this.speed.x -= DRAG_FORCE_COEFFICIENT * iterationTimeDelta
-    this.currentPosition.x += speed.x * (direction === 'right' ? Math.abs(Math.cos(angle)) : -Math.abs(Math.cos(angle))) * iterationTimeDelta
+    if (needUpdateSpeed && confettiSpeed.x > 0.0001) this.confettiSpeed.x -= DRAG_FORCE_COEFFICIENT * iterationTimeDelta
+    
+    this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
     this.currentPosition.y = (
       this.initialPosition.y
-      - speed.y * Math.abs(Math.sin(angle)) * timeDeltaSinceCreation
+      - confettiSpeed.y * this.absSin * timeDeltaSinceCreation
       + (needUpdateSpeed ? FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2 : 0)
     )
 
     if (radiusYUpdateDirection === 'down') {
       this.radius.y -= iterationTimeDelta * rotationSpeed
+      
       if (this.radius.y <= 0) {
         this.radius.y = 0
         this.radiusYUpdateDirection = 'up'
       }
     } else {
       this.radius.y += iterationTimeDelta * rotationSpeed
-      if (this.radius.y >= 10) {
-        this.radius.y = 10
+      
+      if (this.radius.y >= INITIAL_SHAPE_RADIUS) {
+        this.radius.y = INITIAL_SHAPE_RADIUS
         this.radiusYUpdateDirection = 'down'
       }
     }
   }
 
   getIsVisibleOnCanvas(canvasHeight: number): boolean {
-    return this.currentPosition.y < canvasHeight + 100
+    return this.currentPosition.y < canvasHeight + SHAPE_VISIBILITY_TRESHOLD
   }
 }
 

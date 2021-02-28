@@ -12,7 +12,7 @@ const RGBColors = [
 ]
 
 function generateRandomRGBColor(): string {
-  return RGBColors[generateRandomNumber(0, RGBColors.length - 1)]
+  return RGBColors[generateRandomNumber(0, RGBColors.length)]
 }
 
 export { generateRandomRGBColor }
