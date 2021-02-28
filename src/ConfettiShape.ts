@@ -30,25 +30,25 @@ function getWindowWidthCoefficient() {
 }
 
 class ConfettiShape {
-  confettiSpeed: ISpeed
-  rotationSpeed: number
+  private confettiSpeed: ISpeed
+  private rotationSpeed: number
 
-  radius: IRadius
+  private radius: IRadius
   
   // We can calculate absolute cos and sin at shape init
-  absCos: number
-  absSin: number
+  private readonly absCos: number
+  private readonly absSin: number
   
-  initialPosition: IPosition
-  currentPosition: IPosition
+  private initialPosition: IPosition
+  private currentPosition: IPosition
   
-  color: string
+  private readonly color: string
 
-  radiusYUpdateDirection: 'up' | 'down'
+  private radiusYUpdateDirection: 'up' | 'down'
 
-  createdAt: number
+  private readonly createdAt: number
   
-  direction: TConfettiDirection
+  private readonly direction: TConfettiDirection
 
   constructor(initialPosition: IPosition, direction: TConfettiDirection) {
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)

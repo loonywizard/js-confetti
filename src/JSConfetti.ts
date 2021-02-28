@@ -5,13 +5,13 @@ import { IPosition } from './types'
 
 
 class JSConfetti {
-  canvas: HTMLCanvasElement
-  canvasContext: CanvasRenderingContext2D
+  private readonly canvas: HTMLCanvasElement
+  private readonly canvasContext: CanvasRenderingContext2D
 
-  shapes: ConfettiShape[]
-  lastUpdated: number
+  private shapes: ConfettiShape[]
+  private lastUpdated: number
 
-  constructor() {
+  public constructor() {
     this.canvas = createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
 
@@ -22,7 +22,7 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this, 0), 0)
   }
 
-  loop(iterationIndex: number): void {
+  private loop(iterationIndex: number): void {
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
@@ -49,7 +49,7 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this, ++iterationIndex), 0)
   }
 
-  addConfetti(): void {
+  public addConfetti(): void {
     const yPosition = window.innerHeight * 5 / 7
     
     const leftConfettiesPosition: IPosition = {
