@@ -3,7 +3,8 @@
   "version": "0.0.14",
   "license": "MIT",
   "description": "js-confetti",
-  "main": "dist/index.js",
+  "main": "dist/js-confetti.min.js",
+  "module": "dist/es/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/loonywizard/js-confetti.git"
@@ -15,7 +16,7 @@
   ],
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
-    "build": "NODE_ENV=production webpack --config webpack.config.ts",
+    "build": "rollup -c",
     "build-example": "NODE_ENV=production webpack --config webpack.config.example.ts",
     "lint": "eslint src --ext .ts"
   },
@@ -23,6 +24,7 @@
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
+    "@rollup/plugin-babel": "^5.3.0",
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/html-webpack-plugin": "^3.2.4",
     "@types/node": "^14.14.28",
@@ -37,6 +39,9 @@
     "eslint-plugin-import": "^2.22.1",
     "fork-ts-checker-webpack-plugin": "^6.1.0",
     "html-webpack-plugin": "5.0.0-alpha.4",
+    "rollup": "^2.40.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
     "ts-loader": "^8.0.11",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.2",
