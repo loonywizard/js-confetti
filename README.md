@@ -7,8 +7,6 @@
 
 Demo: https://loonywizard.github.io/js-confetti/
 
-NPM: https://www.npmjs.com/package/js-confetti
-
 ## Usage
 
 Install library via yarn or npm
