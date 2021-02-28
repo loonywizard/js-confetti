@@ -14,7 +14,6 @@ const config: Configuration = {
     path: path.resolve(__dirname, 'dist'),
     library: 'jsConfetti',
     libraryTarget: 'umd',
-    globalObject: 'this',
   },
   module: {
     rules: [
