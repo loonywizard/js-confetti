@@ -2,12 +2,15 @@ import JSConfetti from '../src/index'
 
 function init() {
   const jsConfetti = new JSConfetti()
+  const button = document.getElementById('button')
 
   function onClickHandler() {
     jsConfetti.addConfetti()
   }
 
-  document.body.addEventListener('click', onClickHandler)
+  if (!button) return
+  
+  button.addEventListener('click', onClickHandler)
 }
 
 
