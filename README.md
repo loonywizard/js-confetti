@@ -40,8 +40,3 @@ jsConfetti.addConfetti({
   confettiesNumber: 200,
 })
 ```
-
-
-## Warning!
-
-Work in Progress
