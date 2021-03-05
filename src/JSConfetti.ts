@@ -1,7 +1,8 @@
 import { fixDPR } from './fixDPR'
 import { ConfettiShape } from './ConfettiShape'
 import { createCanvas } from './createCanvas'
-import { IPosition } from './types'
+import { normalizeConfettiConfig } from './normalizeConfettiConfig'
+import { IPosition, TAddConfettiConfig } from './types'
 
 
 class JSConfetti {
@@ -49,7 +50,9 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this, ++iterationIndex), 0)
   }
 
-  public addConfetti(): void {
+  public addConfetti(confettiesConfig: TAddConfettiConfig = {}): void {
+    const { confettiRadius } = normalizeConfettiConfig(confettiesConfig)
+
     const yPosition = window.innerHeight * 5 / 7
     
     const leftConfettiesPosition: IPosition = {
@@ -62,8 +65,17 @@ class JSConfetti {
     }
 
     for (let i = 0; i < 100; i++) {
-      this.shapes.push(new ConfettiShape(leftConfettiesPosition, 'right'))
-      this.shapes.push(new ConfettiShape(rightConfettiesPosition, 'left'))
+      this.shapes.push(new ConfettiShape({
+        initialPosition: leftConfettiesPosition, 
+        direction: 'right',
+        confettiRadius,
+      }))
+
+      this.shapes.push(new ConfettiShape({
+        initialPosition: rightConfettiesPosition, 
+        direction: 'left',
+        confettiRadius,
+      }))
     }
   }
 }

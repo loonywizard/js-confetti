@@ -1,26 +1,25 @@
 import { IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomRGBColor } from './generateRandomRGBColor'
+import {
+  FREE_FALLING_OBJECT_ACCELERATION,
+  DRAG_FORCE_COEFFICIENT,
+  ROTATION_SLOWDOWN_ACCELERATION,
 
+  MIN_INITIAL_CONFETTI_SPEED,
+  MAX_INITIAL_CONFETTI_SPEED,
 
-const FREE_FALLING_OBJECT_ACCELERATION = 0.00125
-const DRAG_FORCE_COEFFICIENT = 0.0008
-const ROTATION_SLOWDOWN_ACCELERATION = 0.00001
+  MIN_INITIAL_ROTATION_SPEED,
+  MAX_INITIAL_ROTATION_SPEED,
 
-const INITIAL_SHAPE_RADIUS = 10
+  MIN_CONFETTI_ANGLE,
+  MAX_CONFETTI_ANGLE,
 
-const MIN_INITIAL_CONFETTI_SPEED = 0.9
-const MAX_INITIAL_CONFETTI_SPEED = 1.7
+  MAX_CONFETTI_POSITION_SHIFT,
 
-const MIN_INITIAL_ROTATION_SPEED = 0.03
-const MAX_INITIAL_ROTATION_SPEED = 0.10
+  SHAPE_VISIBILITY_TRESHOLD,
+} from './consts'
 
-const MIN_CONFETTI_ANGLE = 15
-const MAX_CONFETTI_ANGLE = 82
-
-const MAX_CONFETTI_POSITION_SHIFT = 150
-
-const SHAPE_VISIBILITY_TRESHOLD = 100
 
 // For wide screens - fast confetties, for small screens - slow confetties
 function getWindowWidthCoefficient() {
@@ -29,11 +28,18 @@ function getWindowWidthCoefficient() {
   return Math.log(window.innerWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
+interface TConstructorArgs {
+  initialPosition: IPosition, 
+  direction: TConfettiDirection,
+  confettiRadius: number
+}
+
 class ConfettiShape {
   private confettiSpeed: ISpeed
   private rotationSpeed: number
 
   private radius: IRadius
+  private readonly initialRadius: number
   
   // We can calculate absolute cos and sin at shape init
   private readonly absCos: number
@@ -50,7 +56,7 @@ class ConfettiShape {
   
   private readonly direction: TConfettiDirection
 
-  constructor(initialPosition: IPosition, direction: TConfettiDirection) {
+  constructor({ initialPosition, direction, confettiRadius }: TConstructorArgs) {
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
     
@@ -62,8 +68,9 @@ class ConfettiShape {
     this.rotationSpeed = generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3)
 
     this.radius = {
-      x: INITIAL_SHAPE_RADIUS, y: INITIAL_SHAPE_RADIUS
+      x: confettiRadius, y: confettiRadius
     }
+    this.initialRadius = confettiRadius
 
     this.radiusYUpdateDirection = 'down'
     
@@ -144,8 +151,8 @@ class ConfettiShape {
     } else {
       this.radius.y += iterationTimeDelta * rotationSpeed
       
-      if (this.radius.y >= INITIAL_SHAPE_RADIUS) {
-        this.radius.y = INITIAL_SHAPE_RADIUS
+      if (this.radius.y >= this.initialRadius) {
+        this.radius.y = this.initialRadius
         this.radiusYUpdateDirection = 'down'
       }
     }
