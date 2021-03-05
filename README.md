@@ -25,6 +25,19 @@ const jsConfetti = new JSConfetti()
 jsConfetti.addConfetti()
 ```
 
+### addConfetti config
+
+```js
+jsConfetti.addConfetti({
+  confettiRadius: 10,
+})
+```
+
+| Prop           | Type        | Default value |
+| -------------- | ----------- | ------------- |
+| confettiRadius | number      | 10            |
+
+
 ## Warning!
 
 Work in Progress
