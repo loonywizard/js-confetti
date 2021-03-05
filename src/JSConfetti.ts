@@ -51,7 +51,7 @@ class JSConfetti {
   }
 
   public addConfetti(confettiesConfig: TAddConfettiConfig = {}): void {
-    const { confettiRadius } = normalizeConfettiConfig(confettiesConfig)
+    const { confettiRadius, confettiesNumber } = normalizeConfettiConfig(confettiesConfig)
 
     const yPosition = window.innerHeight * 5 / 7
     
@@ -64,7 +64,7 @@ class JSConfetti {
       y: yPosition,
     }
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < confettiesNumber / 2; i++) {
       this.shapes.push(new ConfettiShape({
         initialPosition: leftConfettiesPosition, 
         direction: 'right',
