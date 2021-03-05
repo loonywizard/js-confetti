@@ -12,4 +12,8 @@ type ISpeed = I2DCoordinates
 // Direction, in which confetti is moving
 type TConfettiDirection = 'left' | 'right'
 
-export { IPosition, IRadius, ISpeed, TConfettiDirection }
+interface TAddConfettiConfig {
+  confettiRadius?: number,
+}
+
+export { IPosition, IRadius, ISpeed, TConfettiDirection, TAddConfettiConfig }
