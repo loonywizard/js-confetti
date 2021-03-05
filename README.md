@@ -25,17 +25,21 @@ const jsConfetti = new JSConfetti()
 jsConfetti.addConfetti()
 ```
 
-### addConfetti config
+### addConfetti args
+
+`addConfetti` method accepts args object with the following params:
+
+| Prop             | Type        |  Description                                                        | Default value |
+| ---------------- | ----------- | ------------------------------------------------------------------- | ------------- |
+| confettiRadius   | number      | Radius of confetti shape in pixels                                  | 10            |
+| confettiesNumber | number      | Number of confetties to fire (N / 2 for each side - left and right) | 200           |
 
 ```js
 jsConfetti.addConfetti({
   confettiRadius: 10,
+  confettiesNumber: 200,
 })
 ```
-
-| Prop           | Type        | Default value |
-| -------------- | ----------- | ------------- |
-| confettiRadius | number      | 10            |
 
 
 ## Warning!
