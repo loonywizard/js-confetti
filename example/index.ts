@@ -11,6 +11,10 @@ function init() {
   if (!button) return
   
   button.addEventListener('click', onClickHandler)
+
+  setTimeout(() => {
+    jsConfetti.addConfetti()
+  }, 1000)
 }
 
 
