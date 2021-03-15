@@ -34,14 +34,14 @@ jsConfetti.addConfetti()
 
 | Prop             | Type        |  Description                             | Default value         |
 | ---------------- | ----------- | ---------------------------------------- | --------------------- |
-| confettiRadius   | number      | Radius of confetti shape in pixels       | 10                    |
+| confettiRadius   | number      | Radius of confetti shape in pixels       | 8                     |
 | confettiesNumber | number      | Number of confetties to fire             | 200                   |
 | confettiColors   | string[]    | Array of colors for confetti             | Array of RGB colors   |
 
 
 ```js
 jsConfetti.addConfetti({
-  confettiRadius: 10,
+  confettiRadius: 8,
   confettiesNumber: 200,
   confettiColors: ['#fcf403', '#62fc03', '#f4fc03', '#03e7fc', '#03fca5', '#a503fc', '#fc03ad', '#fc9003']
 })
