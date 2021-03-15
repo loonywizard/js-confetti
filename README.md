@@ -1,14 +1,17 @@
-# js-confetti
+# 🎉 JavaScript Confetti library
 
 [![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
 ![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/js-confetti)
 
-🎉 JavaScript Confetti library
-- zero dependencies used!
-- works without any config! (but could be configured if needed)
-- has TypeScript typings
-- confetti speed adapts to user screen width
+
+✅ Zero dependencies used
+
+✅ Works without any config
+
+✅ Has TypeScript typings
+
+✅ Confetti speed adapts to user screen width
 
 Demo: https://loonywizard.github.io/js-confetti/
 
