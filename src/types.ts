@@ -15,6 +15,7 @@ type TConfettiDirection = 'left' | 'right'
 interface TAddConfettiConfig {
   confettiRadius?: number,
   confettiesNumber?: number,
+  confettiColors?: string[],
 }
 
 export { IPosition, IRadius, ISpeed, TConfettiDirection, TAddConfettiConfig }
