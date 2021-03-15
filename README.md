@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
 ![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/js-confetti)
 
 🎉 JavaScript Confetti library
 - zero dependencies used!
