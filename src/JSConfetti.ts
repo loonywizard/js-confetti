@@ -35,8 +35,6 @@ class JSConfetti {
     this.shapes.forEach((shape) => {
       shape.updatePosition(timeDelta, currentTime, canvasWidth)
 
-      // TODO: try to batch confetti drawings togheter, group by colors
-      // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
       shape.draw(this.canvasContext)
     })
 
