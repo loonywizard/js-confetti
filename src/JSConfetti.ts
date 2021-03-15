@@ -2,7 +2,7 @@ import { fixDPR } from './fixDPR'
 import { ConfettiShape } from './ConfettiShape'
 import { createCanvas } from './createCanvas'
 import { normalizeConfettiConfig } from './normalizeConfettiConfig'
-import { IPosition, TAddConfettiConfig } from './types'
+import { IPosition, IAddConfettiConfig } from './types'
 
 
 class JSConfetti {
@@ -48,7 +48,7 @@ class JSConfetti {
     setTimeout(() => this.loop.call(this, ++iterationIndex), 0)
   }
 
-  public addConfetti(confettiesConfig: TAddConfettiConfig = {}): void {
+  public addConfetti(confettiesConfig: IAddConfettiConfig = {}): void {
     const { confettiRadius, confettiesNumber, confettiColors } = normalizeConfettiConfig(confettiesConfig)
 
     const yPosition = window.innerHeight * 5 / 7
