@@ -1,6 +1,6 @@
 import { IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
-import { generateRandomRGBColor } from './generateRandomRGBColor'
+import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
   FREE_FALLING_OBJECT_ACCELERATION,
   DRAG_FORCE_COEFFICIENT,
@@ -31,7 +31,8 @@ function getWindowWidthCoefficient() {
 interface TConstructorArgs {
   initialPosition: IPosition, 
   direction: TConfettiDirection,
-  confettiRadius: number
+  confettiRadius: number,
+  confettiColors: string[],
 }
 
 class ConfettiShape {
@@ -56,7 +57,7 @@ class ConfettiShape {
   
   private readonly direction: TConfettiDirection
 
-  constructor({ initialPosition, direction, confettiRadius }: TConstructorArgs) {
+  constructor({ initialPosition, direction, confettiRadius, confettiColors }: TConstructorArgs) {
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
     
@@ -91,7 +92,7 @@ class ConfettiShape {
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
-    this.color = generateRandomRGBColor()
+    this.color = generateRandomArrayElement(confettiColors)
 
     this.createdAt = new Date().getTime()
     this.direction = direction
