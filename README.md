@@ -6,6 +6,7 @@
 🎉 JavaScript Confetti library
 - zero dependencies used!
 - works without any config! (but could be configured if needed)
+- has TypeScript typings
 - confetti speed adapts to user screen width
 
 Demo: https://loonywizard.github.io/js-confetti/
