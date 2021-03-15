@@ -5,6 +5,7 @@
   "description": "js-confetti",
   "main": "dist/js-confetti.min.js",
   "module": "dist/es/index.js",
+  "types": "typings/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/loonywizard/js-confetti.git"
@@ -12,7 +13,8 @@
   "author": "Vladimir Nikitin vladimirsuperwizard@gmail.com",
   "homepage": "https://github.com/loonywizard/js-confetti",
   "files": [
-    "dist"
+    "dist",
+    "typings"
   ],
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
