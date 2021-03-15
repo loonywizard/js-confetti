@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
 ![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
 
-🎉 JS Confetti library with zero dependencies
+🎉 JS Confetti library with zero dependencies, works without any config!
 
 Demo: https://loonywizard.github.io/js-confetti/
 
@@ -29,10 +29,11 @@ jsConfetti.addConfetti()
 
 `addConfetti` method accepts args object with the following params:
 
-| Prop             | Type        |  Description                                                        | Default value |
-| ---------------- | ----------- | ------------------------------------------------------------------- | ------------- |
-| confettiRadius   | number      | Radius of confetti shape in pixels                                  | 10            |
-| confettiesNumber | number      | Number of confetties to fire (N / 2 for each side - left and right) | 200           |
+| Prop             | Type        |  Description                           | Default value |
+| ---------------- | ----------- | -------------------------------------- | ------------- |
+| confettiRadius   | number      | Radius of confetti shape in pixels     | 10            |
+| confettiesNumber | number      | Number of confetties to fire           | 200           |
+
 
 ```js
 jsConfetti.addConfetti({
