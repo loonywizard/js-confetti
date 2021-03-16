@@ -35,9 +35,11 @@ body {
   margin: 0;
 }
 
-.gist {
-  margin-top: 20px;
+.my-code {
   width: 100%;
+  margin: 20px 0 !important;
+  padding: 0 20px !important;
+  font-size: 13px !important;
 }
 
 .links {

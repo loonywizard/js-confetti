@@ -4,6 +4,8 @@
     <title>JS Confetti</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="prism.css">
+    <script src="prism.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -25,7 +27,13 @@
         <a href="https://www.npmjs.com/package/js-confetti" target="_blank">NPM</a>
       </div>
 
-      <script src="https://gist.github.com/loonywizard/0fe799bd07f7f37e2b29d60dd600c1cd.js"></script>
+      <pre class="my-code"><code class="language-js">
+import JSConfetti from 'js-confetti'
+
+const jsConfetti = new JSConfetti()
+
+jsConfetti.addConfetti()
+      </code></pre>
 
       <button class="button" id="button">Click me!</button>
     </div>
