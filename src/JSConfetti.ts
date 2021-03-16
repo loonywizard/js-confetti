@@ -12,6 +12,8 @@ class JSConfetti {
   private shapes: ConfettiShape[]
   private lastUpdated: number
 
+  private iterationIndex: number
+
   public constructor() {
     this.canvas = createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
@@ -19,11 +21,14 @@ class JSConfetti {
     this.shapes = []
 
     this.lastUpdated = new Date().getTime()
+    this.iterationIndex = 0
 
-    setTimeout(() => this.loop.call(this, 0), 0)
+    this.loop = this.loop.bind(this)
+
+    requestAnimationFrame(this.loop)
   }
 
-  private loop(iterationIndex: number): void {
+  private loop(): void {
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
@@ -39,13 +44,14 @@ class JSConfetti {
     })
 
     // Do not remove invisible shapes on every iteration
-    if (iterationIndex % 100 === 0) {
+    if (this.iterationIndex % 100 === 0) {
       this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(canvasHeight))
     }
 
     this.lastUpdated = currentTime
+    this.iterationIndex++
 
-    setTimeout(() => this.loop.call(this, ++iterationIndex), 0)
+    requestAnimationFrame(this.loop)
   }
 
   public addConfetti(confettiesConfig: IAddConfettiConfig = {}): void {
