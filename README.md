@@ -5,15 +5,12 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/js-confetti)
 
 
-✅ Zero dependencies used
-
-✅ Works without any config
-
-✅ Has TypeScript typings
-
+✅ Zero dependencies used<br/>
+✅ Works without any config<br/>
+✅ Has TypeScript typings<br/>
 ✅ Confetti speed adapts to user screen width
 
-Demo: https://loonywizard.github.io/js-confetti/
+Links: [Library Website](https://loonywizard.github.io/js-confetti/) | [CodeSandbox Playground](https://codesandbox.io/s/confetti-vanilla-js-r5kqi)
 
 ## Usage
 
@@ -33,7 +30,7 @@ const jsConfetti = new JSConfetti()
 jsConfetti.addConfetti()
 ```
 
-### addConfetti args
+## Customise confetties
 
 `addConfetti` method accepts args object with the following params:
 
@@ -43,6 +40,7 @@ jsConfetti.addConfetti()
 | confettiesNumber | number      | Number of confetties to fire             | 200                   |
 | confettiColors   | string[]    | Array of colors for confetti             | Array of RGB colors   |
 
+<br/>
 
 ```js
 jsConfetti.addConfetti({
