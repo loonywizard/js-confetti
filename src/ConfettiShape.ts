@@ -48,6 +48,7 @@ class ConfettiShape {
 
   private radius: IRadius
   private readonly initialRadius: number
+  private readonly rotationAngle: number
   
   // We can calculate absolute cos and sin at shape init
   private readonly absCos: number
@@ -83,6 +84,7 @@ class ConfettiShape {
       x: confettiRadius, y: confettiRadius
     }
     this.initialRadius = confettiRadius
+    this.rotationAngle = direction === 'left'  ? generateRandomNumber(0, 0.2, 3) : generateRandomNumber(-0.2, 0, 3)
 
     this.radiusYUpdateDirection = 'down'
     
@@ -110,7 +112,7 @@ class ConfettiShape {
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
-    const { currentPosition, radius, color } = this
+    const { currentPosition, radius, color, rotationAngle } = this
     const dpr = window.devicePixelRatio
 
     canvasContext.fillStyle = color
@@ -119,7 +121,7 @@ class ConfettiShape {
 
     canvasContext.ellipse(
       currentPosition.x * dpr, currentPosition.y * dpr, radius.x * dpr, radius.y * dpr,
-      0, 0, 2 * Math.PI,
+      rotationAngle, 0, 2 * Math.PI,
     )
     canvasContext.fill()
   }
