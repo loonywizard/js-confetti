@@ -48,6 +48,6 @@ jsConfetti.addConfetti()
 jsConfetti.addConfetti({
   confettiRadius: 8,
   confettiesNumber: 200,
-  confettiColors: ['#fcf403', '#62fc03', '#f4fc03', '#03e7fc', '#03fca5', '#a503fc', '#fc03ad', '#fc9003']
+  confettiColors: ['#fcf403', '#62fc03', '#f4fc03', '#03e7fc', '#03fca5', '#a503fc', '#fc03ad', '#fc03c2']
 })
 ```

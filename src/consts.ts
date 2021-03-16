@@ -31,7 +31,7 @@ const DEFAULT_CONFETTI_COLORS = [
   '#03fca5',
   '#a503fc',
   '#fc03ad',
-  '#fc9003',
+  '#fc03c2',
 ]
 
 export {
