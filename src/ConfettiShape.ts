@@ -3,11 +3,15 @@ import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
   FREE_FALLING_OBJECT_ACCELERATION,
-  DRAG_FORCE_COEFFICIENT,
+  MIN_DRAG_FORCE_COEFFICIENT,
+  MAX_DRAG_FORCE_COEFFICIENT,
   ROTATION_SLOWDOWN_ACCELERATION,
 
   MIN_INITIAL_CONFETTI_SPEED,
   MAX_INITIAL_CONFETTI_SPEED,
+
+  MIN_FINAL_X_CONFETTI_SPEED,
+  MAX_FINAL_X_CONFETTI_SPEED,
 
   MIN_INITIAL_ROTATION_SPEED,
   MAX_INITIAL_ROTATION_SPEED,
@@ -39,6 +43,9 @@ class ConfettiShape {
   private confettiSpeed: ISpeed
   private rotationSpeed: number
 
+  private dragForceCoefficient: number
+  private finalConfettiSpeedX: number
+
   private radius: IRadius
   private readonly initialRadius: number
   
@@ -66,7 +73,11 @@ class ConfettiShape {
       y: initialSpeed,
     }
 
+    this.finalConfettiSpeedX = generateRandomNumber(MIN_FINAL_X_CONFETTI_SPEED, MAX_FINAL_X_CONFETTI_SPEED, 3)
+
     this.rotationSpeed = generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3)
+
+    this.dragForceCoefficient = generateRandomNumber(MIN_DRAG_FORCE_COEFFICIENT, MAX_DRAG_FORCE_COEFFICIENT, 6)
 
     this.radius = {
       x: confettiRadius, y: confettiRadius
@@ -115,7 +126,9 @@ class ConfettiShape {
 
   updatePosition(iterationTimeDelta: number, currentTime: number, canvasWidth: number): void {
     const { 
-      confettiSpeed, 
+      confettiSpeed,
+      dragForceCoefficient,
+      finalConfettiSpeedX,
       radiusYUpdateDirection, 
       rotationSpeed,
       createdAt,
@@ -132,7 +145,7 @@ class ConfettiShape {
       direction === 'left' ? this.currentPosition.x >= 0 : this.currentPosition.x <= canvasWidth
     )
     
-    if (needUpdateSpeed && confettiSpeed.x > 0.0001) this.confettiSpeed.x -= DRAG_FORCE_COEFFICIENT * iterationTimeDelta
+    if (needUpdateSpeed && confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
     
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
