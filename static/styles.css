@@ -49,6 +49,7 @@ body {
 
 .links a {
   margin-left: 10px;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 800px) {
