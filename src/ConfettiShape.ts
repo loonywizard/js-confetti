@@ -142,19 +142,14 @@ class ConfettiShape {
 
     if (this.rotationSpeed < 0) this.rotationSpeed = 0
     
-    // Do not update confettiSpeed while confetti is invisible
-    const needUpdateSpeed = (
-      direction === 'left' ? this.currentPosition.x >= 0 : this.currentPosition.x <= canvasWidth
-    )
-    
-    if (needUpdateSpeed && confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
+    if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
     
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
     this.currentPosition.y = (
       this.initialPosition.y
       - confettiSpeed.y * this.absSin * timeDeltaSinceCreation
-      + (needUpdateSpeed ? FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2 : 0)
+      + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
     )
 
     if (radiusYUpdateDirection === 'down') {
