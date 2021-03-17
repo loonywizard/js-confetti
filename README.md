@@ -1,6 +1,6 @@
 
 
-<p align="center"><img src="app-demo.gif" /></p>
+<img src="app-demo.gif" />
 
 # 🎉 JavaScript Confetti library
 
