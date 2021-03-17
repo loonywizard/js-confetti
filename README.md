@@ -30,6 +30,8 @@ const jsConfetti = new JSConfetti()
 jsConfetti.addConfetti()
 ```
 
+**⚠️ Attencion ⚠️** `new JSConfetti()` creates HTML Canvas element and adds it to page, so call it only once!
+
 ## Customise confetties
 
 `addConfetti` method accepts args object with the following params:
