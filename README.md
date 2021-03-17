@@ -2,19 +2,17 @@
 
 <p align="center"><img src="app-demo.gif" /></p>
 
+# 🎉 JavaScript Confetti library
 
-<h1 align="center">🎉 JavaScript Confetti library</h1>
+[![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
+![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/js-confetti)
 
-<p align="center">
-  <a href="https://badge.fury.io/js/js-confetti.svg">
-    <img src="https://badge.fury.io/js/js-confetti.svg"></a>
-  <a href="https://img.shields.io/npm/dw/js-confetti">
-    <img src="https://img.shields.io/npm/dw/js-confetti"></a>
-  <a href="https://img.shields.io/bundlephobia/minzip/js-confetti">
-    <img src="https://img.shields.io/bundlephobia/minzip/js-confetti"></a>
-</p>
 
-js-confetti is a lightweight zero-config open-source JavaScript library for confetti without any dependencies
+✅ Zero dependencies used<br/>
+✅ Works without any config<br/>
+✅ Has TypeScript typings<br/>
+✅ Confetti speed adapts to user screen width
 
 Links: [GitHub](https://github.com/loonywizard/js-confetti) | [Library Website](https://loonywizard.github.io/js-confetti/) | [CodeSandbox Playground](https://codesandbox.io/s/confetti-vanilla-js-r5kqi)
 
