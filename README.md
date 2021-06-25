@@ -11,7 +11,7 @@
 
 
 ✅ Zero dependencies used<br/>
-✅ Works without any config, yet could be configured<br/>
+✅ Works without any config, yet configurable<br/>
 ✅ Has TypeScript typings<br/>
 ✅ Confetti speed adapts to user screen width
 
