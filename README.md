@@ -1,6 +1,6 @@
 
 
-<img src="app-demo.gif" />
+<img src="assets/standard-confetti.gif" width="500px" />
 
 # 🎉 JavaScript Confetti library
 
