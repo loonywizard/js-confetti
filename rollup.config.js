@@ -35,4 +35,22 @@ export default [
       terser(),
     ],
   },
+
+  // IIFE
+  {
+    input: 'src/index.ts',
+    output: {
+      file: 'dist/js-confetti.browser.js',
+      format: 'iife',
+      name: 'JSConfetti',
+    },
+    plugins: [
+      typescript(),
+      babel({
+        extensions: ['.ts'],
+        exclude: 'node_modules/**',
+      }),
+      terser(),
+    ],
+  },
 ]
