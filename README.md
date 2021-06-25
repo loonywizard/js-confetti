@@ -49,20 +49,40 @@ jsConfetti.addConfetti()
 
 ## Customise confetties
 
-`addConfetti` method accepts args object with the following params:
+Customize confetties colors:
 
-| Prop             | Type        |  Description                             | Default value         |
-| ---------------- | ----------- | ---------------------------------------- | --------------------- |
-| confettiRadius   | number      | Radius of confetti shape in pixels       | 8                     |
-| confettiesNumber | number      | Number of confetties to fire             | 200                   |
-| confettiColors   | string[]    | Array of colors for confetti             | Array of RGB colors   |
-
-<br/>
+<img src="assets/custom-color.gif" width="500px" />
 
 ```js
 jsConfetti.addConfetti({
-  confettiRadius: 8,
-  confettiesNumber: 200,
-  confettiColors: ['#fcf403', '#62fc03', '#f4fc03', '#03e7fc', '#03fca5', '#a503fc', '#fc03ad', '#fc03c2']
+  confettiColors: [
+    '#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7',
+  ],
 })
 ```
+
+<br/>
+Customize confetties radius:
+
+<img src="assets/custom-radius.gif" width="500px" />
+
+```js
+jsConfetti.addConfetti({
+  confettiRadius: 6,
+})
+```
+
+<br/>
+Customize confetties number:
+
+<img src="assets/custom-confetties-number.gif" width="500px" />
+
+```js
+jsConfetti.addConfetti({
+  confettiRadius: 6,
+  confettiesNumber: 500,
+})
+```
+
+## License
+MIT
