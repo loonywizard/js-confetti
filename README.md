@@ -1,21 +1,21 @@
 
+<img src="assets/app-demo.gif" width="600px" />
 
-<img src="assets/standard-confetti.gif" width="500px" />
-
-# 🎉 JavaScript Confetti library
 
 [![npm version](https://badge.fury.io/js/js-confetti.svg)](https://badge.fury.io/js/js-confetti)
 ![NPM Downloads](https://img.shields.io/npm/dw/js-confetti)
 [![](https://data.jsdelivr.com/v1/package/npm/js-confetti/badge?style=rounded)](https://www.jsdelivr.com/package/npm/js-confetti)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/js-confetti)
 
+# 🎉 JavaScript Confetti library
 
-✅ Zero dependencies used<br/>
-✅ Works without any config, yet configurable<br/>
-✅ Has TypeScript typings<br/>
-✅ Confetti speed adapts to user screen width
+💥 Supports emojies as confetties<br/>
+⚡️ Zero dependencies used<br/>
+🦄 Works without any config, yet configurable<br/>
+🛠 Has TypeScript typings<br/>
+🧩 Confetti speed adapts to user screen width
 
-Links: [GitHub](https://github.com/loonywizard/js-confetti) | [NPM](https://www.npmjs.com/package/js-confetti) | [Library Website](https://loonywizard.github.io/js-confetti/) | [CodeSandbox Playground](https://codesandbox.io/s/confetti-vanilla-js-r5kqi)
+Links: [GitHub](https://github.com/loonywizard/js-confetti) | [NPM](https://www.npmjs.com/package/js-confetti) | [Demo](https://loonywizard.github.io/js-confetti/)
 
 
 ## Install
@@ -49,9 +49,17 @@ jsConfetti.addConfetti()
 
 ## Customise confetties
 
-Customize confetties colors:
+Use emojies as confetties:
 
-<img src="assets/custom-color.gif" width="500px" />
+```js
+jsConfetti.addConfetti({
+  { emojies: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'] },
+})
+```
+
+<br/>
+
+Customize confetties colors:
 
 ```js
 jsConfetti.addConfetti({
@@ -62,9 +70,8 @@ jsConfetti.addConfetti({
 ```
 
 <br/>
-Customize confetties radius:
 
-<img src="assets/custom-radius.gif" width="500px" />
+Customize confetties radius:
 
 ```js
 jsConfetti.addConfetti({
@@ -73,14 +80,25 @@ jsConfetti.addConfetti({
 ```
 
 <br/>
-Customize confetties number:
 
-<img src="assets/custom-confetties-number.gif" width="500px" />
+Customize confetties number:
 
 ```js
 jsConfetti.addConfetti({
   confettiRadius: 6,
   confettiesNumber: 500,
+})
+```
+
+<br/>
+
+Combine different properties:
+
+```js
+jsConfetti.addConfetti({
+  emojies: ['🦄'],
+  confettiRadius: 100,
+  confettiesNumber: 30,
 })
 ```
 
