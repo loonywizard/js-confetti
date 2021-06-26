@@ -16,6 +16,10 @@ interface IAddConfettiConfig {
   confettiRadius?: number,
   confettiesNumber?: number,
   confettiColors?: string[],
+
+  // emojies could be used as confetties
+  // confettiColors will be ignored if emojies array provided
+  emojies?: string[],
 }
 
 export { IPosition, IRadius, ISpeed, TConfettiDirection, IAddConfettiConfig }

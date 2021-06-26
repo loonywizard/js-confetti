@@ -37,6 +37,7 @@ interface TConstructorArgs {
   direction: TConfettiDirection,
   confettiRadius: number,
   confettiColors: string[],
+  emojies: string[],
 }
 
 class ConfettiShape {
@@ -49,6 +50,7 @@ class ConfettiShape {
   private radius: IRadius
   private readonly initialRadius: number
   private readonly rotationAngle: number
+  private emojiRotationAngle: number
   
   // We can calculate absolute cos and sin at shape init
   private readonly absCos: number
@@ -57,7 +59,8 @@ class ConfettiShape {
   private initialPosition: IPosition
   private currentPosition: IPosition
   
-  private readonly color: string
+  private readonly color: string | null
+  private readonly emoji: string | null
 
   private radiusYUpdateDirection: 'up' | 'down'
 
@@ -65,7 +68,7 @@ class ConfettiShape {
   
   private readonly direction: TConfettiDirection
 
-  constructor({ initialPosition, direction, confettiRadius, confettiColors }: TConstructorArgs) {
+  constructor({ initialPosition, direction, confettiRadius, confettiColors, emojies }: TConstructorArgs) {
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
     
@@ -76,7 +79,7 @@ class ConfettiShape {
 
     this.finalConfettiSpeedX = generateRandomNumber(MIN_FINAL_X_CONFETTI_SPEED, MAX_FINAL_X_CONFETTI_SPEED, 3)
 
-    this.rotationSpeed = generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient()
+    this.rotationSpeed = emojies.length ? 0.01 : generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient()
 
     this.dragForceCoefficient = generateRandomNumber(MIN_DRAG_FORCE_COEFFICIENT, MAX_DRAG_FORCE_COEFFICIENT, 6)
 
@@ -85,6 +88,7 @@ class ConfettiShape {
     }
     this.initialRadius = confettiRadius
     this.rotationAngle = direction === 'left'  ? generateRandomNumber(0, 0.2, 3) : generateRandomNumber(-0.2, 0, 3)
+    this.emojiRotationAngle = generateRandomNumber(0, 2 * Math.PI)
 
     this.radiusYUpdateDirection = 'down'
     
@@ -105,28 +109,40 @@ class ConfettiShape {
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
-    this.color = generateRandomArrayElement(confettiColors)
+    this.color = emojies.length ? null : generateRandomArrayElement(confettiColors)
+    this.emoji = emojies.length ? generateRandomArrayElement(emojies) : null
 
     this.createdAt = new Date().getTime()
     this.direction = direction
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
-    const { currentPosition, radius, color, rotationAngle } = this
+    const { currentPosition, radius, color, emoji, rotationAngle, emojiRotationAngle } = this
     const dpr = window.devicePixelRatio
 
-    canvasContext.fillStyle = color
-    
-    canvasContext.beginPath()
+    if (color) {
+      canvasContext.fillStyle = color
 
-    canvasContext.ellipse(
-      currentPosition.x * dpr, currentPosition.y * dpr, radius.x * dpr, radius.y * dpr,
-      rotationAngle, 0, 2 * Math.PI,
-    )
-    canvasContext.fill()
+      canvasContext.beginPath()
+
+      canvasContext.ellipse(
+        currentPosition.x * dpr, currentPosition.y * dpr, radius.x * dpr, radius.y * dpr,
+        rotationAngle, 0, 2 * Math.PI,
+      )
+      canvasContext.fill()
+    } else if (emoji) {
+      canvasContext.font = `${radius.x}px serif`
+
+      canvasContext.save()
+      canvasContext.translate(dpr * currentPosition.x, dpr * currentPosition.y)
+      canvasContext.rotate(emojiRotationAngle)
+      canvasContext.textAlign = 'center'
+      canvasContext.fillText(emoji, 0, 0)
+      canvasContext.restore()
+    }
   }
 
-  updatePosition(iterationTimeDelta: number, currentTime: number, canvasWidth: number): void {
+  updatePosition(iterationTimeDelta: number, currentTime: number): void {
     const { 
       confettiSpeed,
       dragForceCoefficient,
@@ -138,10 +154,7 @@ class ConfettiShape {
     } = this
 
     const timeDeltaSinceCreation = currentTime - createdAt
-    this.rotationSpeed -= ROTATION_SLOWDOWN_ACCELERATION * iterationTimeDelta
 
-    if (this.rotationSpeed < 0) this.rotationSpeed = 0
-    
     if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
     
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
@@ -151,6 +164,17 @@ class ConfettiShape {
       - confettiSpeed.y * this.absSin * timeDeltaSinceCreation
       + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
     )
+
+    this.rotationSpeed -= this.emoji ? 0.0001 : ROTATION_SLOWDOWN_ACCELERATION * iterationTimeDelta
+
+    if (this.rotationSpeed < 0) this.rotationSpeed = 0
+
+    // no need to update rotation radius for emoji
+    if (this.emoji) {
+      this.emojiRotationAngle += (this.rotationSpeed * iterationTimeDelta) % (2 * Math.PI)
+
+      return
+    }
 
     if (radiusYUpdateDirection === 'down') {
       this.radius.y -= iterationTimeDelta * rotationSpeed
