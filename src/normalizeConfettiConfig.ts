@@ -7,12 +7,14 @@ import {
 
 function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): Required<IAddConfettiConfig> {
   const {
-    confettiRadius = INITIAL_SHAPE_RADIUS,
-    confettiesNumber = DEFAULT_CONFETTIES_NUMBER,
+    // TODO: refactor these constants!
+    confettiRadius = confettiConfig.emojies ? 80 : INITIAL_SHAPE_RADIUS,
+    confettiesNumber = confettiConfig.emojies ? 80 : DEFAULT_CONFETTIES_NUMBER,
     confettiColors = DEFAULT_CONFETTI_COLORS,
+    emojies = [],
   } = confettiConfig
 
-  return { confettiRadius, confettiesNumber, confettiColors }
+  return { confettiRadius, confettiesNumber, confettiColors, emojies }
 } 
 
 export { normalizeConfettiConfig }

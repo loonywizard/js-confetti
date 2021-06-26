@@ -35,10 +35,9 @@ class JSConfetti {
     const timeDelta = currentTime - this.lastUpdated
     
     const canvasHeight = this.canvas.offsetHeight
-    const canvasWidth = this.canvas.offsetWidth
 
     this.shapes.forEach((shape) => {
-      shape.updatePosition(timeDelta, currentTime, canvasWidth)
+      shape.updatePosition(timeDelta, currentTime)
 
       shape.draw(this.canvasContext)
     })
@@ -55,7 +54,7 @@ class JSConfetti {
   }
 
   public addConfetti(confettiesConfig: IAddConfettiConfig = {}): void {
-    const { confettiRadius, confettiesNumber, confettiColors } = normalizeConfettiConfig(confettiesConfig)
+    const { confettiRadius, confettiesNumber, confettiColors, emojies } = normalizeConfettiConfig(confettiesConfig)
 
     const yPosition = window.innerHeight * 5 / 7
     
@@ -74,6 +73,7 @@ class JSConfetti {
         direction: 'right',
         confettiRadius,
         confettiColors,
+        emojies,
       }))
 
       this.shapes.push(new ConfettiShape({
@@ -81,6 +81,7 @@ class JSConfetti {
         direction: 'left',
         confettiRadius,
         confettiColors,
+        emojies,
       }))
     }
   }

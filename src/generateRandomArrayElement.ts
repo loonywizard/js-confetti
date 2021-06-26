@@ -1,7 +1,7 @@
 import { generateRandomNumber } from './generateRandomNumber'
 
-function generateRandomArrayElement(confettiColors: string[]): string {
-  return confettiColors[generateRandomNumber(0, confettiColors.length)]
+function generateRandomArrayElement<T>(arr: T[]): T {
+  return arr[generateRandomNumber(0, arr.length)]
 }
 
 export { generateRandomArrayElement }

@@ -15,51 +15,11 @@ body {
 
 .container {
   width: 100%;
-  max-width: 500px;
-
-  margin: 0 auto;
+  height: 100%;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  
-  padding: 100px 20px 20px;
-}
-
-.advantages-list {
-  text-align: left;
-}
-
-.advantages-list p {
-  margin: 0;
-}
-
-.my-code {
-  width: 100%;
-  margin: 20px 0 !important;
-  padding: 0 20px !important;
-  font-size: 13px !important;
-}
-
-.links {
-  margin-top: 20px;
-  display: flex;
-}
-
-.links a {
-  margin-left: 10px;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 800px) {
-  .container {
-    padding: 0 10px 20px;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
 }
 
 .button {
