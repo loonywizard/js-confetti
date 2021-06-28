@@ -97,7 +97,7 @@ Combine different properties:
 ```js
 jsConfetti.addConfetti({
   emojies: ['🦄'],
-  confettiRadius: 100,
+  emojiSize: 100,
   confettiesNumber: 30,
 })
 ```

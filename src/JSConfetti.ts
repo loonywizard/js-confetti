@@ -54,7 +54,13 @@ class JSConfetti {
   }
 
   public addConfetti(confettiesConfig: IAddConfettiConfig = {}): void {
-    const { confettiRadius, confettiesNumber, confettiColors, emojies } = normalizeConfettiConfig(confettiesConfig)
+    const {
+      confettiRadius,
+      confettiesNumber,
+      confettiColors,
+      emojies,
+      emojiSize,
+    } = normalizeConfettiConfig(confettiesConfig)
 
     const yPosition = window.innerHeight * 5 / 7
     
@@ -73,7 +79,9 @@ class JSConfetti {
         direction: 'right',
         confettiRadius,
         confettiColors,
+        confettiesNumber,
         emojies,
+        emojiSize,
       }))
 
       this.shapes.push(new ConfettiShape({
@@ -81,7 +89,9 @@ class JSConfetti {
         direction: 'left',
         confettiRadius,
         confettiColors,
+        confettiesNumber,
         emojies,
+        emojiSize,
       }))
     }
   }

@@ -1,4 +1,4 @@
-import { IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
+import { IAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
@@ -32,12 +32,9 @@ function getWindowWidthCoefficient() {
   return Math.log(window.innerWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
-interface TConstructorArgs {
+interface TConstructorArgs extends Required<IAddConfettiConfig> {
   initialPosition: IPosition, 
   direction: TConfettiDirection,
-  confettiRadius: number,
-  confettiColors: string[],
-  emojies: string[],
 }
 
 class ConfettiShape {
@@ -50,6 +47,7 @@ class ConfettiShape {
   private radius: IRadius
   private readonly initialRadius: number
   private readonly rotationAngle: number
+  private emojiSize: number
   private emojiRotationAngle: number
   
   // We can calculate absolute cos and sin at shape init
@@ -68,7 +66,15 @@ class ConfettiShape {
   
   private readonly direction: TConfettiDirection
 
-  constructor({ initialPosition, direction, confettiRadius, confettiColors, emojies }: TConstructorArgs) {
+  constructor(args: TConstructorArgs) {
+    const {
+      initialPosition,
+      direction,
+      confettiRadius,
+      confettiColors,
+      emojies,
+      emojiSize,
+    } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
     
@@ -88,6 +94,7 @@ class ConfettiShape {
     }
     this.initialRadius = confettiRadius
     this.rotationAngle = direction === 'left'  ? generateRandomNumber(0, 0.2, 3) : generateRandomNumber(-0.2, 0, 3)
+    this.emojiSize = emojiSize
     this.emojiRotationAngle = generateRandomNumber(0, 2 * Math.PI)
 
     this.radiusYUpdateDirection = 'down'
@@ -117,7 +124,15 @@ class ConfettiShape {
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
-    const { currentPosition, radius, color, emoji, rotationAngle, emojiRotationAngle } = this
+    const { 
+      currentPosition, 
+      radius, 
+      color, 
+      emoji, 
+      rotationAngle, 
+      emojiRotationAngle,
+      emojiSize,
+    } = this
     const dpr = window.devicePixelRatio
 
     if (color) {
@@ -131,7 +146,7 @@ class ConfettiShape {
       )
       canvasContext.fill()
     } else if (emoji) {
-      canvasContext.font = `${radius.x}px serif`
+      canvasContext.font = `${emojiSize}px serif`
 
       canvasContext.save()
       canvasContext.translate(dpr * currentPosition.x, dpr * currentPosition.y)

@@ -20,6 +20,7 @@ interface IAddConfettiConfig {
   // emojies could be used as confetties
   // confettiColors will be ignored if emojies array provided
   emojies?: string[],
+  emojiSize?: number,
 }
 
 export { IPosition, IRadius, ISpeed, TConfettiDirection, IAddConfettiConfig }
