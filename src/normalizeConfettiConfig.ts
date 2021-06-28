@@ -4,14 +4,14 @@ import {
   INITIAL_EMOJI_SIZE,
 
   DEFAULT_CONFETTIES_NUMBER,
+  DEFAULT_EMOJIES_NUMBER,
   DEFAULT_CONFETTI_COLORS,
 } from './consts'
 
 function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): Required<IAddConfettiConfig> {
   const {
-    // TODO: refactor these constants!
     confettiRadius = INITIAL_SHAPE_RADIUS,
-    confettiesNumber = confettiConfig.emojies ? 80 : DEFAULT_CONFETTIES_NUMBER,
+    confettiesNumber = confettiConfig.emojies ? DEFAULT_EMOJIES_NUMBER : DEFAULT_CONFETTIES_NUMBER,
     confettiColors = DEFAULT_CONFETTI_COLORS,
 
     emojies = [],
