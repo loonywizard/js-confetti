@@ -53,7 +53,7 @@ Use emojies as confetties:
 
 ```js
 jsConfetti.addConfetti({
-  { emojies: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'] },
+   emojies: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
 })
 ```
 
