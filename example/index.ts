@@ -6,9 +6,9 @@ import { IAddConfettiConfig } from '../src/types'
 const CONFETTI_ARGS: IAddConfettiConfig[] = [
   {},
   { confettiRadius: 12, confettiesNumber: 100 },
-  { emojies: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'] },
-  { emojies: ['⚡️', '💥', '✨', '💫'] },
-  { emojies: ['🦄'], confettiRadius: 100, confettiesNumber: 30 },
+  { emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'] },
+  { emojis: ['⚡️', '💥', '✨', '💫'] },
+  { emojis: ['🦄'], confettiRadius: 100, confettiesNumber: 30 },
   {
     confettiColors: ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff'],
     confettiRadius: 10,

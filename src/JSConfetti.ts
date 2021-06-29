@@ -58,7 +58,7 @@ class JSConfetti {
       confettiRadius,
       confettiesNumber,
       confettiColors,
-      emojies,
+      emojis,
       emojiSize,
     } = normalizeConfettiConfig(confettiesConfig)
 
@@ -80,7 +80,7 @@ class JSConfetti {
         confettiRadius,
         confettiColors,
         confettiesNumber,
-        emojies,
+        emojis,
         emojiSize,
       }))
 
@@ -90,7 +90,7 @@ class JSConfetti {
         confettiRadius,
         confettiColors,
         confettiesNumber,
-        emojies,
+        emojis,
         emojiSize,
       }))
     }

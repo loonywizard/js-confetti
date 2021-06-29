@@ -9,7 +9,7 @@
 
 # 🎉 JavaScript Confetti library
 
-💥 Supports emojies as confetties<br/>
+💥 Supports emojis as confetties<br/>
 ⚡️ Zero dependencies used<br/>
 🦄 Works without any config, yet configurable<br/>
 🛠 Has TypeScript typings<br/>
@@ -49,11 +49,11 @@ jsConfetti.addConfetti()
 
 ## Customise confetties
 
-Use emojies as confetties:
+Use emojis as confetties:
 
 ```js
 jsConfetti.addConfetti({
-   emojies: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
 })
 ```
 
@@ -96,7 +96,7 @@ Combine different properties:
 
 ```js
 jsConfetti.addConfetti({
-  emojies: ['🦄'],
+  emojis: ['🦄'],
   emojiSize: 100,
   confettiesNumber: 30,
 })

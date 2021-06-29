@@ -1,4 +1,4 @@
-import { IAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
+import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
@@ -32,7 +32,7 @@ function getWindowWidthCoefficient() {
   return Math.log(window.innerWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
-interface TConstructorArgs extends Required<IAddConfettiConfig> {
+interface TConstructorArgs extends INormalizedAddConfettiConfig {
   initialPosition: IPosition, 
   direction: TConfettiDirection,
 }
@@ -72,7 +72,7 @@ class ConfettiShape {
       direction,
       confettiRadius,
       confettiColors,
-      emojies,
+      emojis,
       emojiSize,
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
@@ -85,7 +85,7 @@ class ConfettiShape {
 
     this.finalConfettiSpeedX = generateRandomNumber(MIN_FINAL_X_CONFETTI_SPEED, MAX_FINAL_X_CONFETTI_SPEED, 3)
 
-    this.rotationSpeed = emojies.length ? 0.01 : generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient()
+    this.rotationSpeed = emojis.length ? 0.01 : generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient()
 
     this.dragForceCoefficient = generateRandomNumber(MIN_DRAG_FORCE_COEFFICIENT, MAX_DRAG_FORCE_COEFFICIENT, 6)
 
@@ -116,8 +116,8 @@ class ConfettiShape {
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
-    this.color = emojies.length ? null : generateRandomArrayElement(confettiColors)
-    this.emoji = emojies.length ? generateRandomArrayElement(emojies) : null
+    this.color = emojis.length ? null : generateRandomArrayElement(confettiColors)
+    this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
 
     this.createdAt = new Date().getTime()
     this.direction = direction

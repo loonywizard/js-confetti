@@ -7,7 +7,7 @@ interface IAddConfettiConfig {
   confettiRadius?: number,
   confettiesNumber?: number,
   confettiColors?: string[],
-  emojies?: string[],
+  emojis?: string[],
 }
 
 declare class JSConfetti {

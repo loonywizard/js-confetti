@@ -17,10 +17,22 @@ interface IAddConfettiConfig {
   confettiesNumber?: number,
   confettiColors?: string[],
 
-  // emojies could be used as confetties
-  // confettiColors will be ignored if emojies array provided
-  emojies?: string[],
+  // emojis could be used as confetties
+  // confettiColors will be ignored if emojis array provided
+  emojis?: string[],
   emojiSize?: number,
+  
+  // @deprecated: wrong plural forms were used
+  emojies?: string[],
 }
 
-export { IPosition, IRadius, ISpeed, TConfettiDirection, IAddConfettiConfig }
+type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies'>>
+
+export {
+  IPosition,
+  IRadius,
+  ISpeed,
+  TConfettiDirection,
+  IAddConfettiConfig,
+  INormalizedAddConfettiConfig,
+}
