@@ -25,7 +25,7 @@ import {
 } from './consts'
 
 
-// For wide screens - fast confetties, for small screens - slow confetties
+// For wide screens - fast confetti, for small screens - slow confetti
 function getWindowWidthCoefficient() {
   const HD_SCREEN_WIDTH = 1920
 

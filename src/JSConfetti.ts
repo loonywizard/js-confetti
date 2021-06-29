@@ -53,43 +53,43 @@ class JSConfetti {
     requestAnimationFrame(this.loop)
   }
 
-  public addConfetti(confettiesConfig: IAddConfettiConfig = {}): void {
+  public addConfetti(confettiConfig: IAddConfettiConfig = {}): void {
     const {
       confettiRadius,
-      confettiesNumber,
+      confettiNumber,
       confettiColors,
       emojis,
       emojiSize,
-    } = normalizeConfettiConfig(confettiesConfig)
+    } = normalizeConfettiConfig(confettiConfig)
 
     const yPosition = window.innerHeight * 5 / 7
     
-    const leftConfettiesPosition: IPosition = {
+    const leftConfettiPosition: IPosition = {
       x: 0,
       y: yPosition,
     }
-    const rightConfettiesPosition: IPosition = {
+    const rightConfettiPosition: IPosition = {
       x: window.innerWidth,
       y: yPosition,
     }
 
-    for (let i = 0; i < confettiesNumber / 2; i++) {
+    for (let i = 0; i < confettiNumber / 2; i++) {
       this.shapes.push(new ConfettiShape({
-        initialPosition: leftConfettiesPosition, 
+        initialPosition: leftConfettiPosition, 
         direction: 'right',
         confettiRadius,
         confettiColors,
-        confettiesNumber,
+        confettiNumber,
         emojis,
         emojiSize,
       }))
 
       this.shapes.push(new ConfettiShape({
-        initialPosition: rightConfettiesPosition, 
+        initialPosition: rightConfettiPosition, 
         direction: 'left',
         confettiRadius,
         confettiColors,
-        confettiesNumber,
+        confettiNumber,
         emojis,
         emojiSize,
       }))

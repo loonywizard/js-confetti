@@ -3,7 +3,7 @@ import {
   INITIAL_SHAPE_RADIUS,
   INITIAL_EMOJI_SIZE,
 
-  DEFAULT_CONFETTIES_NUMBER,
+  DEFAULT_CONFETTI_NUMBER,
   DEFAULT_EMOJIS_NUMBER,
   DEFAULT_CONFETTI_COLORS,
 } from './consts'
@@ -11,7 +11,7 @@ import {
 function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalizedAddConfettiConfig {
   const {
     confettiRadius = INITIAL_SHAPE_RADIUS,
-    confettiesNumber = confettiConfig.emojies ? DEFAULT_EMOJIS_NUMBER : DEFAULT_CONFETTIES_NUMBER,
+    confettiNumber = confettiConfig.confettiesNumber || (confettiConfig.emojies ? DEFAULT_EMOJIS_NUMBER : DEFAULT_CONFETTI_NUMBER),
     confettiColors = DEFAULT_CONFETTI_COLORS,
 
     emojis = confettiConfig.emojies || [],
@@ -20,8 +20,9 @@ function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalize
 
   // deprecate wrong plural forms, used in early releases
   if (confettiConfig.emojies) console.error(`emojies argument is deprecated, please use emojis instead`)
+  if (confettiConfig.confettiesNumber) console.error(`confettiesNumber argument is deprecated, please use confettiNumber instead`)
 
-  return { confettiRadius, confettiesNumber, confettiColors, emojis, emojiSize }
+  return { confettiRadius, confettiNumber, confettiColors, emojis, emojiSize }
 } 
 
 export { normalizeConfettiConfig }
