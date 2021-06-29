@@ -11,7 +11,7 @@ import {
 function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalizedAddConfettiConfig {
   const {
     confettiRadius = INITIAL_SHAPE_RADIUS,
-    confettiNumber = confettiConfig.confettiesNumber || (confettiConfig.emojies ? DEFAULT_EMOJIS_NUMBER : DEFAULT_CONFETTI_NUMBER),
+    confettiNumber = confettiConfig.confettiesNumber || (confettiConfig.emojis ? DEFAULT_EMOJIS_NUMBER : DEFAULT_CONFETTI_NUMBER),
     confettiColors = DEFAULT_CONFETTI_COLORS,
 
     emojis = confettiConfig.emojies || [],
