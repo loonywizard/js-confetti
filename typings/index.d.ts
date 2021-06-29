@@ -5,9 +5,9 @@ export = JSConfetti;
 
 interface IAddConfettiConfig {
   confettiRadius?: number,
-  confettiesNumber?: number,
+  confettiNumber?: number,
   confettiColors?: string[],
-  emojies?: string[],
+  emojis?: string[],
 }
 
 declare class JSConfetti {

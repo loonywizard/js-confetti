@@ -14,13 +14,26 @@ type TConfettiDirection = 'left' | 'right'
 
 interface IAddConfettiConfig {
   confettiRadius?: number,
-  confettiesNumber?: number,
+  confettiNumber?: number,
   confettiColors?: string[],
 
-  // emojies could be used as confetties
-  // confettiColors will be ignored if emojies array provided
-  emojies?: string[],
+  // emojis could be used as confetti
+  // confettiColors will be ignored if emojis array provided
+  emojis?: string[],
   emojiSize?: number,
+  
+  // @deprecated: wrong plural forms were used
+  emojies?: string[],
+  confettiesNumber?: number,
 }
 
-export { IPosition, IRadius, ISpeed, TConfettiDirection, IAddConfettiConfig }
+type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies' | 'confettiesNumber'>>
+
+export {
+  IPosition,
+  IRadius,
+  ISpeed,
+  TConfettiDirection,
+  IAddConfettiConfig,
+  INormalizedAddConfettiConfig,
+}
