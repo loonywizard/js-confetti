@@ -47,6 +47,14 @@ jsConfetti.addConfetti()
 
 *NOTE* `new JSConfetti()` creates HTML Canvas element and adds it to page, so call it only once!
 
+If need to use custom canvas element, you can pass `canvas` arg to JSConfetti constructor ([example](https://codepen.io/loonywizard-the-selector/pen/wvdPbGm))
+
+```js
+const canvas = document.getElementById('your_custom_canvas_id')
+
+const jsConfetti = new JSConfetti({ canvas })
+```
+
 ## Customise confetti
 
 Use emojis as confetti:

@@ -6,7 +6,7 @@ function normalizeComputedStyleValue(string: string): number {
 function fixDPR(canvas: HTMLCanvasElement): void {
   const dpr = window.devicePixelRatio
   const computedStyles = getComputedStyle(canvas)
-  
+
   const width = normalizeComputedStyleValue(computedStyles.getPropertyValue('width'))
   const height = normalizeComputedStyleValue(computedStyles.getPropertyValue('height'))
 

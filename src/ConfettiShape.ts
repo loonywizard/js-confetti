@@ -26,15 +26,16 @@ import {
 
 
 // For wide screens - fast confetti, for small screens - slow confetti
-function getWindowWidthCoefficient() {
+function getWindowWidthCoefficient(canvasWidth: number) {
   const HD_SCREEN_WIDTH = 1920
 
-  return Math.log(window.innerWidth) / Math.log(HD_SCREEN_WIDTH)
+  return Math.log(canvasWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
 interface TConstructorArgs extends INormalizedAddConfettiConfig {
   initialPosition: IPosition, 
   direction: TConfettiDirection,
+  canvasWidth: number,
 }
 
 class ConfettiShape {
@@ -74,9 +75,10 @@ class ConfettiShape {
       confettiColors,
       emojis,
       emojiSize,
+      canvasWidth,
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
-    const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient()
+    const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
     
     this.confettiSpeed = {
       x: initialSpeed,
@@ -85,7 +87,7 @@ class ConfettiShape {
 
     this.finalConfettiSpeedX = generateRandomNumber(MIN_FINAL_X_CONFETTI_SPEED, MAX_FINAL_X_CONFETTI_SPEED, 3)
 
-    this.rotationSpeed = emojis.length ? 0.01 : generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient()
+    this.rotationSpeed = emojis.length ? 0.01 : generateRandomNumber(MIN_INITIAL_ROTATION_SPEED, MAX_INITIAL_ROTATION_SPEED, 3) * getWindowWidthCoefficient(canvasWidth)
 
     this.dragForceCoefficient = generateRandomNumber(MIN_DRAG_FORCE_COEFFICIENT, MAX_DRAG_FORCE_COEFFICIENT, 6)
 
