@@ -3,15 +3,33 @@ interface I2DCoordinates {
   y: number,
 }
 
+
 type IPosition = I2DCoordinates
+
 
 type IRadius = I2DCoordinates
 
+
 type ISpeed = I2DCoordinates
 
-// Direction, in which confetti is moving
+
+/*
+ * Direction, in which confetti is moving
+ */
 type TConfettiDirection = 'left' | 'right'
 
+
+/*
+ * Arguments object for JSConfetti constructor
+ */
+interface IJSConfettiConfig {
+  canvas?: HTMLCanvasElement,
+}
+
+
+/*
+ * Arguments object for addConfetti() method
+ */
 interface IAddConfettiConfig {
   confettiRadius?: number,
   confettiNumber?: number,
@@ -27,13 +45,16 @@ interface IAddConfettiConfig {
   confettiesNumber?: number,
 }
 
+
 type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies' | 'confettiesNumber'>>
+
 
 export {
   IPosition,
   IRadius,
   ISpeed,
   TConfettiDirection,
+  IJSConfettiConfig,
   IAddConfettiConfig,
   INormalizedAddConfettiConfig,
 }

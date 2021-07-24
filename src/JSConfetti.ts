@@ -2,7 +2,7 @@ import { fixDPR } from './fixDPR'
 import { ConfettiShape } from './ConfettiShape'
 import { createCanvas } from './createCanvas'
 import { normalizeConfettiConfig } from './normalizeConfettiConfig'
-import { IPosition, IAddConfettiConfig } from './types'
+import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
 
 
 class JSConfetti {
@@ -14,8 +14,8 @@ class JSConfetti {
 
   private iterationIndex: number
 
-  public constructor() {
-    this.canvas = createCanvas()
+  public constructor(jsConfettiConfig: IJSConfettiConfig = {}) {
+    this.canvas = jsConfettiConfig.canvas || createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
 
     this.shapes = []
@@ -62,14 +62,19 @@ class JSConfetti {
       emojiSize,
     } = normalizeConfettiConfig(confettiConfig)
 
-    const yPosition = window.innerHeight * 5 / 7
+    const dpr = window.devicePixelRatio
+    
+    const canvasWidth = this.canvas.width / dpr
+    const canvasHeight = this.canvas.height / dpr
+
+    const yPosition = canvasHeight * 5 / 7
     
     const leftConfettiPosition: IPosition = {
       x: 0,
       y: yPosition,
     }
     const rightConfettiPosition: IPosition = {
-      x: window.innerWidth,
+      x: canvasWidth,
       y: yPosition,
     }
 
@@ -82,6 +87,7 @@ class JSConfetti {
         confettiNumber,
         emojis,
         emojiSize,
+        canvasWidth,
       }))
 
       this.shapes.push(new ConfettiShape({
@@ -92,6 +98,7 @@ class JSConfetti {
         confettiNumber,
         emojis,
         emojiSize,
+        canvasWidth,
       }))
     }
   }
