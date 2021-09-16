@@ -110,5 +110,17 @@ jsConfetti.addConfetti({
 })
 ```
 
+## How to run locally
+
+Install dependencies by Yarn or NPM
+```sh
+yarn install
+```
+
+Run `dev` script with example build
+```sh
+yarn run dev
+```
+
 ## License
 MIT
