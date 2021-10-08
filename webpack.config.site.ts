@@ -10,22 +10,23 @@ const isProd = process.env.NODE_ENV === 'production'
 
 const config: Configuration = {
   mode: isProd ? 'production' : 'development',
-  entry: './example/index.ts',
+  entry: './site/index.tsx',
   output: {
     filename: '[name][contenthash].js',
-    path: path.resolve(__dirname, 'example_dist'),
+    path: path.resolve(__dirname, 'site_dist'),
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: 'babel-loader',
+        // use: ['babel-loader', '@babel/plugin-transform-react-jsx'],
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './assets/index.html' }), 
@@ -38,7 +39,7 @@ const config: Configuration = {
 
 if (!isProd) {
   config.devServer = {
-    contentBase: path.join(__dirname, 'example_dist'),
+    contentBase: path.join(__dirname, 'site_dist'),
     compress: true,
     port: 9000
   }

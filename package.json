@@ -17,19 +17,23 @@
     "typings"
   ],
   "scripts": {
-    "dev": "NODE_ENV=development webpack serve --config webpack.config.example.ts",
+    "dev": "NODE_ENV=development webpack serve --config webpack.config.site.ts",
     "build": "rollup -c",
-    "build-example": "NODE_ENV=production webpack --config webpack.config.example.ts",
+    "build-site": "NODE_ENV=production webpack --config webpack.config.site.ts",
     "lint": "eslint src --ext .ts"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.12.7",
     "@rollup/plugin-babel": "^5.3.0",
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/html-webpack-plugin": "^3.2.4",
     "@types/node": "^14.14.28",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
     "@types/webpack": "^4.41.26",
     "@types/webpack-dev-server": "^3.11.1",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
@@ -54,5 +58,9 @@
   "keywords": [
     "confetti",
     "js-confetti"
-  ]
+  ],
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
 }

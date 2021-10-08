@@ -117,7 +117,7 @@ Install dependencies by Yarn or NPM
 yarn install
 ```
 
-Run `dev` script with example build
+Run `dev` script with website build
 ```sh
 yarn run dev
 ```
