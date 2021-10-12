@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { useCallback, useEffect, useRef } from 'react'
+import { useForm } from 'react-hook-form'
 
 import JSConfetti from '../src/index'
 import { generateRandomArrayElement  } from '../src/generateRandomArrayElement'
@@ -24,9 +25,17 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
   },
 ]
 
+// TODO: randomize default values
+const defaultValues = {
+  confettiNumber: 50,
+  confettiRadius: 20,
+  useEmoji: false,
+}
+
 
 function App(): JSX.Element {
   const jsConfettiRef = useRef<JSConfetti>()
+  const { register, handleSubmit } = useForm({ defaultValues })
 
   useEffect(() => {
     jsConfettiRef.current = new JSConfetti()
@@ -40,16 +49,63 @@ function App(): JSX.Element {
     return () => clearTimeout(timeoutId)
   }, [])
 
-  const onButtonClick = useCallback(() => {
+  const onSubmit = useCallback((formData) => {
+    const { confettiNumber, confettiRadius, useEmoji } = formData
     if (jsConfettiRef.current) {
-      jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS))
+      const addConfettiArgs = {
+        confettiNumber,
+        confettiRadius,
+      }
+
+      // TODO: fix typescript
+      if (useEmoji) {
+        addConfettiArgs.emojis = ['🌈', '⚡️', '💥', '✨', '💫', '🌸']
+      } else {
+        addConfettiArgs.confettiColors = ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff']
+      }
+      
+      jsConfettiRef.current.addConfetti(addConfettiArgs)
     }
   }, [jsConfettiRef])
 
   return (
-    <>
-      <button className="button" onClick={onButtonClick}>Click me!</button>
-    </>
+    <form className="sandbox-form" onSubmit={handleSubmit(onSubmit)}>
+      <button className="button" type="submit">Fire Confetti!</button>
+
+      <div>
+        <label htmlFor="confettiNumberSelect">Confetti Number: </label>
+        <input
+          id="confettiNumberSelect"
+          type="number"
+          min="1"
+          max="1000"
+          {...register('confettiNumber', { required: true })}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="confettiRadiusSelect">Confetti Radius: </label>
+        <input
+          id="confettiRadiusSelect"
+          type="number"
+          min="1"
+          max="1000"
+          {...register('confettiRadius', { required: true })}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="useEmojiCheckbox">Use Emoji: </label>
+        <input
+          id="useEmojiCheckbox"
+          type="checkbox"
+          {...register('useEmoji')}
+        />
+      </div>
+
+      {/* TODO: add emoji select */}
+      {/* TODO: add confetti color select */}
+    </form>
   )
 }
 
