@@ -6,6 +6,7 @@ import JSConfetti from '../src/index'
 import { generateRandomArrayElement  } from '../src/generateRandomArrayElement'
 import { IAddConfettiConfig } from '../src/types'
 
+import ColorsSelect from './ColorsSelect'
 
 const CONFETTI_ARGS: IAddConfettiConfig[] = [
   {},
@@ -25,46 +26,6 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
   },
 ]
 
-interface IColorSelectProps {
-  // TODO add typings
-  fields: any,
-  register: any,
-  append: any,
-  remove: any,
-  colors: string[],
-}
-
-function ColorsSelect(props: IColorSelectProps): JSX.Element {
-  const { fields, register, append, remove, colors } = props
-
-  function onAddColorClick(event): void {
-    event.preventDefault()
-
-    append({ value: '#ff12ab' })
-  }
-
-  function onDeleteButtonClick(event, colorId) {
-    event.preventDefault()
-
-    remove(colorId)
-  }
-
-  return (
-    <div>
-      {fields.map((field, index) => (
-        <div className="color-input-wrapper">
-          <span className="color-input-color-preview" style={{ backgroundColor: colors[index].value }} />
-          <input {...register(`colors.${index}.value`)} key={field.id} />
-          <button onClick={(event) => onDeleteButtonClick(event, index)}>DELETE</button>
-        </div>
-      ))}
-      {/* TODO: randomize new color! */}
-      <button onClick={onAddColorClick}>Add More Colors!</button>
-    </div>
-  )
-}
-
-
 
 // TODO: randomize default values
 const defaultValues = {
@@ -81,9 +42,9 @@ function App(): JSX.Element {
   const { register, handleSubmit, watch, control } = useForm({ defaultValues })
 
   // TODO implement add / remove
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: "colors", // unique name for your Field Array
+    name: 'colors", // unique name for your Field Array
     // keyName: "id", default to "id", you can change the key name
   })
 
