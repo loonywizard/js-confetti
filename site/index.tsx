@@ -25,26 +25,6 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
   },
 ]
 
-
-interface IColorInputProps {
-  color: string,
-  onChange: (color: string) => void,
-}
-
-function ColorInput(props: IColorInputProps): JSX.Element {
-  const { color, onChange } = props
-  const colorPreviewStyles = { backgroundColor: color }
-  
-  return (
-    <div className="color-input-wrapper">
-      <span className="color-input-color-preview" style={colorPreviewStyles} />
-      {color}
-      <span>DELETE BUTTON (TODO)</span>
-    </div>
-  )
-}
-
-
 interface IColorSelectProps {
   // TODO add typings
   fields: any,
@@ -63,12 +43,19 @@ function ColorsSelect(props: IColorSelectProps): JSX.Element {
     append({ value: '#ff12ab' })
   }
 
+  function onDeleteButtonClick(event, colorId) {
+    event.preventDefault()
+
+    remove(colorId)
+  }
+
   return (
     <div>
       {fields.map((field, index) => (
         <div className="color-input-wrapper">
           <span className="color-input-color-preview" style={{ backgroundColor: colors[index].value }} />
           <input {...register(`colors.${index}.value`)} key={field.id} />
+          <button onClick={(event) => onDeleteButtonClick(event, index)}>DELETE</button>
         </div>
       ))}
       {/* TODO: randomize new color! */}
