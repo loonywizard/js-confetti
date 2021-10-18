@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 
 import JSConfetti from '../src/index'
 import { generateRandomArrayElement  } from '../src/generateRandomArrayElement'
@@ -25,20 +25,73 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
   },
 ]
 
+
+interface IColorInputProps {
+  color: string,
+  onChange: (color: string) => void,
+}
+
+function ColorInput(props: IColorInputProps): JSX.Element {
+  const { color, onChange } = props
+  const colorPreviewStyles = { backgroundColor: color }
+  
+  return (
+    <div className="color-input-wrapper">
+      <span className="color-input-color-preview" style={colorPreviewStyles} />
+      {color}
+      <span>DELETE BUTTON (TODO)</span>
+    </div>
+  )
+}
+
+
+interface IColorSelectProps {
+  // TODO add typings
+  fields: any,
+  register: any,
+  colors: string[],
+}
+
+function ColorsSelect(props: IColorSelectProps): JSX.Element {
+  const { fields, register, colors } = props
+
+  return (
+    <div>
+      {fields.map((field, index) => (
+        <div className="color-input-wrapper">
+          <span className="color-input-color-preview" style={{ backgroundColor: colors[index] }} />
+          <input {...register(`colors.${index}`)} key={field.id} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+
+
 // TODO: randomize default values
 const defaultValues = {
   confettiNumber: 50,
   confettiRadius: 20,
   useEmoji: false,
   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🦄'].join(' '),
+  colors: ['#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#00f5d4'],
 }
 
 
 function App(): JSX.Element {
   const jsConfettiRef = useRef<JSConfetti>()
-  const { register, handleSubmit, watch } = useForm({ defaultValues })
+  const { register, handleSubmit, watch, control } = useForm({ defaultValues })
+
+  // TODO implement add / remove
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: "colors", // unique name for your Field Array
+    // keyName: "id", default to "id", you can change the key name
+  })
 
   const watchUseEmoji = watch('useEmoji')
+  const watchColors = watch('colors')
 
   useEffect(() => {
     jsConfettiRef.current = new JSConfetti()
@@ -53,7 +106,7 @@ function App(): JSX.Element {
   }, [])
 
   const onSubmit = useCallback((formData) => {
-    const { confettiNumber, confettiRadius, useEmoji, emojis } = formData
+    const { confettiNumber, confettiRadius, useEmoji, emojis, colors } = formData
     if (jsConfettiRef.current) {
       const addConfettiArgs = {
         confettiNumber,
@@ -64,7 +117,7 @@ function App(): JSX.Element {
       if (useEmoji) {
         addConfettiArgs.emojis = emojis.split(' ')
       } else {
-        addConfettiArgs.confettiColors = ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff']
+        addConfettiArgs.confettiColors = colors
       }
       
       jsConfettiRef.current.addConfetti(addConfettiArgs)
@@ -116,10 +169,8 @@ function App(): JSX.Element {
           />
         </div>
       ) : (
-        <div>
-          COLORS SELECT
-          {/* TODO: add confetti color select */}
-        </div>
+        // TODO rename fields
+        <ColorsSelect register={register} fields={fields} colors={watchColors} />
       )}
     </form>
   )

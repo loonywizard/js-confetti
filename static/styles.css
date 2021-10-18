@@ -53,3 +53,18 @@ body {
 .button:active {
   background-color: #d21e99;
 }
+
+/* --------------------------------------------- */
+/* Color select                                  */
+/* --------------------------------------------- */
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.color-input-color-preview {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
