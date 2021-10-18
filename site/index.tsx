@@ -35,7 +35,9 @@ const defaultValues = {
 
 function App(): JSX.Element {
   const jsConfettiRef = useRef<JSConfetti>()
-  const { register, handleSubmit } = useForm({ defaultValues })
+  const { register, handleSubmit, watch } = useForm({ defaultValues })
+
+  const watchUseEmoji = watch('useEmoji')
 
   useEffect(() => {
     jsConfettiRef.current = new JSConfetti()
@@ -102,6 +104,16 @@ function App(): JSX.Element {
           {...register('useEmoji')}
         />
       </div>
+
+      {watchUseEmoji ? (
+        <div>
+          EMOJI SELECT
+        </div>
+      ) : (
+        <div>
+          COLORS SELECT
+        </div>
+      )}
 
       {/* TODO: add emoji select */}
       {/* TODO: add confetti color select */}
