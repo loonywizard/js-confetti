@@ -30,6 +30,7 @@ const defaultValues = {
   confettiNumber: 50,
   confettiRadius: 20,
   useEmoji: false,
+  emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🦄'].join(' '),
 }
 
 
@@ -52,7 +53,7 @@ function App(): JSX.Element {
   }, [])
 
   const onSubmit = useCallback((formData) => {
-    const { confettiNumber, confettiRadius, useEmoji } = formData
+    const { confettiNumber, confettiRadius, useEmoji, emojis } = formData
     if (jsConfettiRef.current) {
       const addConfettiArgs = {
         confettiNumber,
@@ -61,7 +62,7 @@ function App(): JSX.Element {
 
       // TODO: fix typescript
       if (useEmoji) {
-        addConfettiArgs.emojis = ['🌈', '⚡️', '💥', '✨', '💫', '🌸']
+        addConfettiArgs.emojis = emojis.split(' ')
       } else {
         addConfettiArgs.confettiColors = ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff']
       }
@@ -107,16 +108,19 @@ function App(): JSX.Element {
 
       {watchUseEmoji ? (
         <div>
-          EMOJI SELECT
+          <label htmlFor="emojisSelect">Add emojies separeted by space: </label>
+          <input
+            id="emojisSelect"
+            type="string"
+            {...register('emojis', { required: true })}
+          />
         </div>
       ) : (
         <div>
           COLORS SELECT
+          {/* TODO: add confetti color select */}
         </div>
       )}
-
-      {/* TODO: add emoji select */}
-      {/* TODO: add confetti color select */}
     </form>
   )
 }
