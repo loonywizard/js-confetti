@@ -49,20 +49,30 @@ interface IColorSelectProps {
   // TODO add typings
   fields: any,
   register: any,
+  append: any,
+  remove: any,
   colors: string[],
 }
 
 function ColorsSelect(props: IColorSelectProps): JSX.Element {
-  const { fields, register, colors } = props
+  const { fields, register, append, remove, colors } = props
+
+  function onAddColorClick(event): void {
+    event.preventDefault()
+
+    append({ value: '#ff12ab' })
+  }
 
   return (
     <div>
       {fields.map((field, index) => (
         <div className="color-input-wrapper">
-          <span className="color-input-color-preview" style={{ backgroundColor: colors[index] }} />
-          <input {...register(`colors.${index}`)} key={field.id} />
+          <span className="color-input-color-preview" style={{ backgroundColor: colors[index].value }} />
+          <input {...register(`colors.${index}.value`)} key={field.id} />
         </div>
       ))}
+      {/* TODO: randomize new color! */}
+      <button onClick={onAddColorClick}>Add More Colors!</button>
     </div>
   )
 }
@@ -75,7 +85,7 @@ const defaultValues = {
   confettiRadius: 20,
   useEmoji: false,
   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🦄'].join(' '),
-  colors: ['#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#00f5d4'],
+  colors: ['#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#00f5d4'].map((color) => ({ value: color })),
 }
 
 
@@ -117,7 +127,7 @@ function App(): JSX.Element {
       if (useEmoji) {
         addConfettiArgs.emojis = emojis.split(' ')
       } else {
-        addConfettiArgs.confettiColors = colors
+        addConfettiArgs.confettiColors = colors.map(({ value }) => value)
       }
       
       jsConfettiRef.current.addConfetti(addConfettiArgs)
@@ -170,7 +180,13 @@ function App(): JSX.Element {
         </div>
       ) : (
         // TODO rename fields
-        <ColorsSelect register={register} fields={fields} colors={watchColors} />
+        <ColorsSelect
+          register={register}
+          fields={fields}
+          colors={watchColors}
+          append={append}
+          remove={remove}
+        />
       )}
     </form>
   )
