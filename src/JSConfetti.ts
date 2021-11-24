@@ -13,11 +13,12 @@ class JSConfetti {
   private lastUpdated: number
 
   private iterationIndex: number
+  private requestAnimationFrameRequested: boolean
 
   public constructor(jsConfettiConfig: IJSConfettiConfig = {}) {
     this.canvas = jsConfettiConfig.canvas || createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
-
+    this.requestAnimationFrameRequested = false
     this.shapes = []
 
     this.lastUpdated = new Date().getTime()
@@ -29,6 +30,8 @@ class JSConfetti {
   }
 
   private loop(): void {
+    this.requestAnimationFrameRequested = false
+
     fixDPR(this.canvas)
 
     const currentTime = new Date().getTime()
@@ -47,9 +50,26 @@ class JSConfetti {
       this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(canvasHeight))
     }
 
-    this.lastUpdated = currentTime
     this.iterationIndex++
 
+    this.queueAnimationFrameIfNeeded()
+  }
+
+  private queueAnimationFrameIfNeeded(): void {
+    if (this.requestAnimationFrameRequested) {
+      // We already have a pended animation frame, so there is no more work
+      return
+    }
+
+    if (this.shapes.length < 1) {
+      // No shapes to animate, so don't queue another frame
+      return
+    }
+
+    this.requestAnimationFrameRequested = true
+
+    // Capture the last updated time for animation
+    this.lastUpdated = new Date().getTime()
     requestAnimationFrame(this.loop)
   }
 
@@ -101,6 +121,8 @@ class JSConfetti {
         canvasWidth,
       }))
     }
+
+    this.queueAnimationFrameIfNeeded()
   }
 }
 
