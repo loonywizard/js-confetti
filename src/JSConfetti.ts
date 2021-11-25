@@ -4,18 +4,60 @@ import { createCanvas } from './createCanvas'
 import { normalizeConfettiConfig } from './normalizeConfettiConfig'
 import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
 
+class ConfettiBatch {
+  private promiseCompletion?: () => void
+  private promise?: Promise<void>
+  private members: ConfettiShape[]
+
+  constructor() {
+    this.members = []
+  }
+
+  getPromise(): Promise<void> {
+    if (!this.promise) {
+      this.promise = new Promise((completionCallback) => this.promiseCompletion = completionCallback)
+    }
+
+    return this.promise
+  }
+
+  addShapes(...shapes: ConfettiShape[]): void {
+    this.members.push(...shapes)
+  }
+
+  complete(): boolean {
+    if (this.members.length) {
+      return false
+    }
+    
+    // If a promise was never requested, we can't complete it
+    this.promiseCompletion?.()
+
+    return true
+  }
+
+  filterShapes(height: number): void {
+    if (this.members.length < 1) {
+      return
+    }
+
+    this.members = this.members.filter((shape) => shape.getIsVisibleOnCanvas(height))
+  }
+}
 
 class JSConfetti {
   private readonly canvas: HTMLCanvasElement
   private readonly canvasContext: CanvasRenderingContext2D
 
   private shapes: ConfettiShape[]
+  private activeConfettiBatches: ConfettiBatch[]
   private lastUpdated: number
 
   private iterationIndex: number
   private requestAnimationFrameRequested: boolean
 
   public constructor(jsConfettiConfig: IJSConfettiConfig = {}) {
+    this.activeConfettiBatches = []
     this.canvas = jsConfettiConfig.canvas || createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
     this.requestAnimationFrameRequested = false
@@ -47,7 +89,15 @@ class JSConfetti {
 
     // Do not remove invisible shapes on every iteration
     if (this.iterationIndex % 100 === 0) {
+
+      // Remove shapes so we don't paint them any more
       this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(canvasHeight))
+
+      // Complete any confetti groups, and remove them if they're completed
+      this.activeConfettiBatches.filter((batch) => {
+        batch.filterShapes(canvasHeight)
+        return !batch.complete()
+      })
     }
 
     this.iterationIndex++
@@ -73,7 +123,7 @@ class JSConfetti {
     requestAnimationFrame(this.loop)
   }
 
-  public addConfetti(confettiConfig: IAddConfettiConfig = {}): void {
+  public addConfetti(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
     const {
       confettiRadius,
       confettiNumber,
@@ -102,8 +152,10 @@ class JSConfetti {
       y: yPosition,
     }
 
+    const confettiGroup = new ConfettiBatch()
+
     for (let i = 0; i < confettiNumber / 2; i++) {
-      this.shapes.push(new ConfettiShape({
+      const right = new ConfettiShape({
         initialPosition: leftConfettiPosition, 
         direction: 'right',
         confettiRadius,
@@ -112,9 +164,9 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
-      }))
+      })
 
-      this.shapes.push(new ConfettiShape({
+      const left = new ConfettiShape({
         initialPosition: rightConfettiPosition, 
         direction: 'left',
         confettiRadius,
@@ -123,10 +175,17 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
-      }))
+      })
+
+      this.shapes.push(right, left)
+      confettiGroup.addShapes(right, left)
     }
 
+    this.activeConfettiBatches.push(confettiGroup)
+
     this.queueAnimationFrameIfNeeded()
+
+    return confettiGroup.getPromise()
   }
 }
 
