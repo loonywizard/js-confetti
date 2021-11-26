@@ -6,42 +6,38 @@ import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
 
 class ConfettiBatch {
   private promiseCompletion?: () => void
-  private promise?: Promise<void>
-  private members: ConfettiShape[]
+  private promise: Promise<void>
+  private shapes: ConfettiShape[]
 
   constructor() {
-    this.members = []
+    this.shapes = []
+    this.promise = new Promise((completionCallback) => this.promiseCompletion = completionCallback);
   }
 
   getPromise(): Promise<void> {
-    if (!this.promise) {
-      this.promise = new Promise((completionCallback) => this.promiseCompletion = completionCallback)
-    }
-
     return this.promise
   }
 
   addShapes(...shapes: ConfettiShape[]): void {
-    this.members.push(...shapes)
+    this.shapes.push(...shapes)
   }
 
   complete(): boolean {
-    if (this.members.length) {
+    if (this.shapes.length) {
       return false
     }
     
-    // If a promise was never requested, we can't complete it
     this.promiseCompletion?.()
 
     return true
   }
 
   filterShapes(height: number): void {
-    if (this.members.length < 1) {
+    if (this.shapes.length < 1) {
       return
     }
 
-    this.members = this.members.filter((shape) => shape.getIsVisibleOnCanvas(height))
+    this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(height))
   }
 }
 
@@ -155,7 +151,7 @@ class JSConfetti {
     const confettiGroup = new ConfettiBatch()
 
     for (let i = 0; i < confettiNumber / 2; i++) {
-      const right = new ConfettiShape({
+      const confettiOnTheRight = new ConfettiShape({
         initialPosition: leftConfettiPosition, 
         direction: 'right',
         confettiRadius,
@@ -166,7 +162,7 @@ class JSConfetti {
         canvasWidth,
       })
 
-      const left = new ConfettiShape({
+      const confettiOnTheLeft = new ConfettiShape({
         initialPosition: rightConfettiPosition, 
         direction: 'left',
         confettiRadius,
@@ -177,8 +173,8 @@ class JSConfetti {
         canvasWidth,
       })
 
-      this.shapes.push(right, left)
-      confettiGroup.addShapes(right, left)
+      this.shapes.push(confettiOnTheRight, confettiOnTheLeft)
+      confettiGroup.addShapes(confettiOnTheRight, confettiOnTheLeft)
     }
 
     this.activeConfettiBatches.push(confettiGroup)
