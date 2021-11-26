@@ -52,10 +52,10 @@ class JSConfetti {
 
     this.iterationIndex++
 
-    this.queueAnimationFrameIfNeeded()
+    this.queueAnimationFrameIfNeeded(currentTime)
   }
 
-  private queueAnimationFrameIfNeeded(): void {
+  private queueAnimationFrameIfNeeded(currentTime?: number): void {
     if (this.requestAnimationFrameRequested) {
       // We already have a pended animation frame, so there is no more work
       return
@@ -69,7 +69,7 @@ class JSConfetti {
     this.requestAnimationFrameRequested = true
 
     // Capture the last updated time for animation
-    this.lastUpdated = new Date().getTime()
+    this.lastUpdated = currentTime || new Date().getTime()
     requestAnimationFrame(this.loop)
   }
 
