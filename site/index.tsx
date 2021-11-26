@@ -41,7 +41,7 @@ function App(): JSX.Element {
 
   const onButtonClick = useCallback(() => {
     if (jsConfettiRef.current) {
-      jsConfettiRef.current.addConfetti(CONFETTI_ARGS[2]).then(() => console.log("Manual batch completed"))
+      jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS)).then(() => console.log("Manual batch completed"))
     }
   }, [jsConfettiRef])
 
