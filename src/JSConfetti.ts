@@ -5,16 +5,17 @@ import { normalizeConfettiConfig } from './normalizeConfettiConfig'
 import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
 
 class ConfettiBatch {
-  private promiseCompletion?: () => void
+  private resolvePromise?: () => void
   private promise: Promise<void>
   private shapes: ConfettiShape[]
 
-  constructor() {
+  constructor(private canvasContext: CanvasRenderingContext2D) {
     this.shapes = []
-    this.promise = new Promise((completionCallback) => this.promiseCompletion = completionCallback);
+    this.promise = new Promise(
+      (completionCallback) => this.resolvePromise = completionCallback)
   }
 
-  getPromise(): Promise<void> {
+  getBatchCompletePromise(): Promise<void> {
     return this.promise
   }
 
@@ -27,17 +28,30 @@ class ConfettiBatch {
       return false
     }
     
-    this.promiseCompletion?.()
+    this.resolvePromise?.()
 
     return true
   }
 
-  filterShapes(height: number): void {
-    if (this.shapes.length < 1) {
-      return
-    }
+  processShapes(
+    time: { timeDelta: number, currentTime: number },
+    canvasHeight: number,
+    cleanupInvisibleShapes: boolean
+  ): void {
+    const { timeDelta, currentTime } = time
 
-    this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(height))
+    this.shapes = this.shapes.filter((shape) => {
+      // Render the shapes in this batch
+      shape.updatePosition(timeDelta, currentTime)
+      shape.draw(this.canvasContext)
+
+      // Only cleanup the shapes if we're being asked to
+      if (!cleanupInvisibleShapes) {
+        return true
+      }
+
+      return shape.getIsVisibleOnCanvas(canvasHeight)
+    })
   }
 }
 
@@ -45,7 +59,6 @@ class JSConfetti {
   private readonly canvas: HTMLCanvasElement
   private readonly canvasContext: CanvasRenderingContext2D
 
-  private shapes: ConfettiShape[]
   private activeConfettiBatches: ConfettiBatch[]
   private lastUpdated: number
 
@@ -57,7 +70,6 @@ class JSConfetti {
     this.canvas = jsConfettiConfig.canvas || createCanvas()
     this.canvasContext = <CanvasRenderingContext2D>this.canvas.getContext('2d')
     this.requestAnimationFrameRequested = false
-    this.shapes = []
 
     this.lastUpdated = new Date().getTime()
     this.iterationIndex = 0
@@ -76,25 +88,21 @@ class JSConfetti {
     const timeDelta = currentTime - this.lastUpdated
     
     const canvasHeight = this.canvas.offsetHeight
+    const cleanupInvisibleShapes = (this.iterationIndex % 100 === 0)
 
-    this.shapes.forEach((shape) => {
-      shape.updatePosition(timeDelta, currentTime)
+    this.activeConfettiBatches = this.activeConfettiBatches.filter((batch) => {
+      batch.processShapes(
+        { timeDelta, currentTime },
+        canvasHeight,
+        cleanupInvisibleShapes)
+      
+      // Do not remove invisible shapes on every iteration
+      if (!cleanupInvisibleShapes) {
+        return true
+      }
 
-      shape.draw(this.canvasContext)
+      return !(batch.complete())
     })
-
-    // Do not remove invisible shapes on every iteration
-    if (this.iterationIndex % 100 === 0) {
-
-      // Remove shapes so we don't paint them any more
-      this.shapes = this.shapes.filter((shape) => shape.getIsVisibleOnCanvas(canvasHeight))
-
-      // Complete any confetti groups, and remove them if they're completed
-      this.activeConfettiBatches.filter((batch) => {
-        batch.filterShapes(canvasHeight)
-        return !batch.complete()
-      })
-    }
 
     this.iterationIndex++
 
@@ -107,7 +115,7 @@ class JSConfetti {
       return
     }
 
-    if (this.shapes.length < 1) {
+    if (this.activeConfettiBatches.length < 1) {
       // No shapes to animate, so don't queue another frame
       return
     }
@@ -148,7 +156,7 @@ class JSConfetti {
       y: yPosition,
     }
 
-    const confettiGroup = new ConfettiBatch()
+    const confettiGroup = new ConfettiBatch(this.canvasContext)
 
     for (let i = 0; i < confettiNumber / 2; i++) {
       const confettiOnTheRight = new ConfettiShape({
@@ -173,7 +181,6 @@ class JSConfetti {
         canvasWidth,
       })
 
-      this.shapes.push(confettiOnTheRight, confettiOnTheLeft)
       confettiGroup.addShapes(confettiOnTheRight, confettiOnTheLeft)
     }
 
@@ -181,7 +188,7 @@ class JSConfetti {
 
     this.queueAnimationFrameIfNeeded()
 
-    return confettiGroup.getPromise()
+    return confettiGroup.getBatchCompletePromise()
   }
 }
 
