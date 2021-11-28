@@ -62,10 +62,14 @@ class JSConfetti {
       emojiSize,
     } = normalizeConfettiConfig(confettiConfig)
 
-    const dpr = window.devicePixelRatio
-    
-    const canvasWidth = this.canvas.width / dpr
-    const canvasHeight = this.canvas.height / dpr
+    // Use the bounding rect rather tahn the canvas width / height, because
+    // .width / .height are unset until a layout pass has been completed. Upon
+    // confetti being immediately queued on a page load, this hasn't happened so
+    // the default of 300x150 will be returned, causing an improper source point
+    // for the confetti animation.
+    const canvasRect = this.canvas.getBoundingClientRect()
+    const canvasWidth = canvasRect.width
+    const canvasHeight = canvasRect.height
 
     const yPosition = canvasHeight * 5 / 7
     
