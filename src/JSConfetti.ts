@@ -88,7 +88,7 @@ class JSConfetti {
     const timeDelta = currentTime - this.lastUpdated
     
     const canvasHeight = this.canvas.offsetHeight
-    const cleanupInvisibleShapes = (this.iterationIndex % 100 === 0)
+    const cleanupInvisibleShapes = (this.iterationIndex % 10 === 0)
 
     this.activeConfettiBatches = this.activeConfettiBatches.filter((batch) => {
       batch.processShapes(
