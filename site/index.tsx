@@ -24,7 +24,6 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
   },
 ]
 
-
 function App(): JSX.Element {
   const jsConfettiRef = useRef<JSConfetti>()
 
@@ -33,7 +32,7 @@ function App(): JSX.Element {
 
     const timeoutId = setTimeout(() => {
       if (jsConfettiRef.current) {
-        jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS))
+        jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS)).then(() => console.log("Initial batch completed"))
       }
     }, 1000)
 
@@ -42,7 +41,7 @@ function App(): JSX.Element {
 
   const onButtonClick = useCallback(() => {
     if (jsConfettiRef.current) {
-      jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS))
+      jsConfettiRef.current.addConfetti(generateRandomArrayElement(CONFETTI_ARGS)).then(() => console.log("Manual batch completed"))
     }
   }, [jsConfettiRef])
 

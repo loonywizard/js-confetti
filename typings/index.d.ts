@@ -14,5 +14,5 @@ interface IAddConfettiConfig {
 declare class JSConfetti {
   constructor();
 
-  addConfetti(confettiConfig?: IAddConfettiConfig): void;
+  addConfetti(confettiConfig?: IAddConfettiConfig): Promise<void>;
 }
