@@ -110,6 +110,22 @@ jsConfetti.addConfetti({
 })
 ```
 
+## addConfetti Promise
+
+`addConfetti` method returns Promise, which is resolved when added confetti dissapears from the user screen due to the gravity physics of confetti
+
+Example:
+
+```js
+// async/await
+await jsConfetti.addConfetti()
+console.log('Confetti animation completed!')
+
+// Promise.then
+jsConfetti.addConfetti()
+   .then(() => console.log('Confetti animation completed!'))
+```
+
 ## How to run locally
 
 Install dependencies by Yarn or NPM
