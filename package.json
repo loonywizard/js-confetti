@@ -45,6 +45,8 @@
     "eslint-plugin-import": "^2.22.1",
     "fork-ts-checker-webpack-plugin": "^6.1.0",
     "html-webpack-plugin": "5.0.0-alpha.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rollup": "^2.40.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
@@ -58,9 +60,5 @@
   "keywords": [
     "confetti",
     "js-confetti"
-  ],
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  }
+  ]
 }
