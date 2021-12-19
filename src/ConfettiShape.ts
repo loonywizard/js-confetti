@@ -157,11 +157,11 @@ class ConfettiShape {
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
-    this.color = emojis.length
+    this.color = emojis.length > 0
       ? null
       : generateRandomArrayElement(confettiColors)
-    this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
-    this.image = images.length ? generateRandomArrayElement(images) : null
+    this.emoji = emojis.length > 0 ? generateRandomArrayElement(emojis) : null
+    this.image = images.length > 0 ? generateRandomArrayElement(images) : null
 
     this.createdAt = new Date().getTime()
     this.direction = direction
