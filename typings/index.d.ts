@@ -3,12 +3,19 @@
 
 export = JSConfetti;
 
+interface IImage {
+  src: CanvasImageSource,
+  width?: number,
+  height?: number,
+}
+
 interface IAddConfettiConfig {
   confettiRadius?: number,
   confettiNumber?: number,
   confettiColors?: string[],
   emojis?: string[],
   emojiSize?: number,
+  images?: IImage[],
 }
 
 declare class JSConfetti {

@@ -39,10 +39,17 @@ interface IAddConfettiConfig {
   // confettiColors will be ignored if emojis array provided
   emojis?: string[],
   emojiSize?: number,
+  images?: IImage[],
   
   // @deprecated: wrong plural forms were used
   emojies?: string[],
-  confettiesNumber?: number,
+  confettiesNumber?: number
+}
+
+interface IImage {
+  src: CanvasImageSource,
+  width?: number,
+  height?: number,
 }
 
 
@@ -52,6 +59,7 @@ type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies' 
 export {
   IPosition,
   IRadius,
+  IImage,
   ISpeed,
   TConfettiDirection,
   IJSConfettiConfig,

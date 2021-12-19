@@ -134,6 +134,7 @@ class JSConfetti {
       confettiColors,
       emojis,
       emojiSize,
+      images
     } = normalizeConfettiConfig(confettiConfig)
 
     // Use the bounding rect rather tahn the canvas width / height, because
@@ -168,6 +169,7 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
+        images
       })
 
       const confettiOnTheLeft = new ConfettiShape({
@@ -179,6 +181,7 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
+        images
       })
 
       confettiGroup.addShapes(confettiOnTheRight, confettiOnTheLeft)

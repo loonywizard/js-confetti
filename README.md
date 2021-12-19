@@ -9,7 +9,7 @@
 
 # 🎉 JavaScript Confetti library
 
-💥 Supports emojis as confetti<br/>
+💥 Supports images or emojis as confetti<br/>
 ⚡️ Zero dependencies used<br/>
 🦄 Works without any config, yet configurable<br/>
 🛠 Has TypeScript typings<br/>
@@ -56,6 +56,21 @@ const jsConfetti = new JSConfetti({ canvas })
 ```
 
 ## Customise confetti
+
+Use images as confetti:
+
+```js
+const img = new Image()
+img.src = "https://i.imgur.com/removed.png"
+jsConfetti.addConfetti({
+   images: [{
+     src: img
+     // optionally specify width and height properties in pixels
+   }]
+})
+```
+
+<br/>
 
 Use emojis as confetti:
 

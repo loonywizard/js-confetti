@@ -5,6 +5,8 @@ import JSConfetti from '../src/index'
 import { generateRandomArrayElement  } from '../src/generateRandomArrayElement'
 import { IAddConfettiConfig } from '../src/types'
 
+const img = new Image()
+img.src = "https://i.imgur.com/removed.png"
 
 const CONFETTI_ARGS: IAddConfettiConfig[] = [
   {},
@@ -21,6 +23,9 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
     confettiColors: ['#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#00f5d4'],
     confettiRadius: 6,
     confettiNumber: 300,
+  },
+  {
+    images: [{ src: img }],
   },
 ]
 
