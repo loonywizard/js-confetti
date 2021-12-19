@@ -40,9 +40,9 @@ function getWindowWidthCoefficient(canvasWidth: number) {
 }
 
 interface TConstructorArgs extends INormalizedAddConfettiConfig {
-  initialPosition: IPosition,
-  direction: TConfettiDirection,
-  canvasWidth: number,
+  initialPosition: IPosition;
+  direction: TConfettiDirection;
+  canvasWidth: number;
 }
 
 class ConfettiShape {
@@ -60,20 +60,21 @@ class ConfettiShape {
 
 
   // We can calculate absolute cos and sin at shape init
-  private readonly absCos: number
-  private readonly absSin: number
+  private readonly absCos: number;
+  private readonly absSin: number;
 
-  private initialPosition: IPosition
-  private currentPosition: IPosition
+  private initialPosition: IPosition;
+  private currentPosition: IPosition;
 
-  private readonly color: string | null
-  private readonly emoji: string | null
-  private readonly image: IImage | null
+  private readonly color: string | null;
+  private readonly emoji: string | null;
+  private readonly image: IImage | null;
 
-  private readonly createdAt: number
-  private radiusYUpdateDirection: "up" | "down"
+  private radiusYUpdateDirection: "up" | "down";
 
-  private readonly direction: TConfettiDirection
+  private readonly createdAt: number;
+
+  private readonly direction: TConfettiDirection;
 
   constructor(args: TConstructorArgs) {
     const {
@@ -86,8 +87,13 @@ class ConfettiShape {
       canvasWidth,
       images,
     } = args
-    const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
-    const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
+    const randomConfettiSpeed = generateRandomNumber(
+      MIN_INITIAL_CONFETTI_SPEED,
+      MAX_INITIAL_CONFETTI_SPEED,
+      3
+    )
+    const initialSpeed =
+      randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
 
     this.confettiSpeed = {
       x: initialSpeed,
@@ -126,11 +132,16 @@ class ConfettiShape {
     this.emojiSize = emojiSize
     this.emojiRotationAngle = generateRandomNumber(0, 2 * Math.PI)
 
-    this.radiusYUpdateDirection = 'down'
+    this.radiusYUpdateDirection = "down"
 
-    const angle = direction === 'left'
-      ? generateRandomNumber(MAX_CONFETTI_ANGLE, MIN_CONFETTI_ANGLE) * Math.PI / 180
-      : generateRandomNumber(-MIN_CONFETTI_ANGLE, -MAX_CONFETTI_ANGLE) * Math.PI / 180
+    const angle =
+      direction === "left"
+        ? (generateRandomNumber(MAX_CONFETTI_ANGLE, MIN_CONFETTI_ANGLE) *
+            Math.PI) /
+          180
+        : (generateRandomNumber(-MIN_CONFETTI_ANGLE, -MAX_CONFETTI_ANGLE) *
+            Math.PI) /
+          180
 
     this.absCos = Math.abs(Math.cos(angle))
     this.absSin = Math.abs(Math.sin(angle))
@@ -223,9 +234,13 @@ class ConfettiShape {
 
     const timeDeltaSinceCreation = currentTime - createdAt
 
-    if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
+    if (confettiSpeed.x > finalConfettiSpeedX)
+      this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
 
-    this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
+    this.currentPosition.x +=
+      confettiSpeed.x *
+      (direction === "left" ? -this.absCos : this.absCos) *
+      iterationTimeDelta
 
     this.currentPosition.x +=
       confettiSpeed.x *
