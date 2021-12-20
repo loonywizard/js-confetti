@@ -39,7 +39,7 @@ interface IAddConfettiConfig {
   // confettiColors will be ignored if emojis array provided
   emojis?: string[],
   emojiSize?: number,
-  
+
   // @deprecated: wrong plural forms were used
   emojies?: string[],
   confettiesNumber?: number,
