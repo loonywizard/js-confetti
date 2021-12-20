@@ -29,7 +29,7 @@ const config: Configuration = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './assets/index.html' }), 
+    new HtmlWebpackPlugin({ template: './assets/index.html' }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: 'static' }],
