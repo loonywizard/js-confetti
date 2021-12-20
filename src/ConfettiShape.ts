@@ -182,13 +182,17 @@ class ConfettiShape {
     if (image) {
       const args: [CanvasImageSource, number, number] = [
         image.src,
-        dpr * currentPosition.x,
-        dpr * currentPosition.y,
+        -image.src.width/2,
+        -image.src.height/2
       ]
       if (image.width && image.height) {
         args.push(image.width, image.height)
       }
+      canvasContext.save()
+      canvasContext.translate(dpr * currentPosition.x, dpr * currentPosition.y)
+      canvasContext.rotate((emojiRotationAngle-45)*(Math.PI/180))
       canvasContext.drawImage(...args)
+      canvasContext.restore()
     } else if (emoji) {
       canvasContext.font = `${emojiSize}px serif`
 
@@ -249,7 +253,7 @@ class ConfettiShape {
     if (this.rotationSpeed < 0) this.rotationSpeed = 0
 
     // no need to update rotation radius for emoji
-    if (this.emoji) {
+    if (this.emoji || this.image) {
       this.emojiRotationAngle +=
         (this.rotationSpeed * iterationTimeDelta) % (2 * Math.PI)
 
