@@ -3,6 +3,10 @@
 
 export = JSConfetti;
 
+interface IJSConfettiConfig {
+  canvas?: HTMLCanvasElement,
+}
+
 interface IAddConfettiConfig {
   confettiRadius?: number,
   confettiNumber?: number,
@@ -12,7 +16,7 @@ interface IAddConfettiConfig {
 }
 
 declare class JSConfetti {
-  constructor();
+  constructor(jsConfettiConfig?: IJSConfettiConfig);
 
   addConfetti(confettiConfig?: IAddConfettiConfig): Promise<void>;
 }
