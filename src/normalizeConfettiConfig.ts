@@ -23,6 +23,6 @@ function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalize
   if (confettiConfig.confettiesNumber) console.error(`confettiesNumber argument is deprecated, please use confettiNumber instead`)
 
   return { confettiRadius, confettiNumber, confettiColors, emojis, emojiSize }
-} 
+}
 
 export { normalizeConfettiConfig }

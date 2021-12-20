@@ -33,7 +33,7 @@ function getWindowWidthCoefficient(canvasWidth: number) {
 }
 
 interface TConstructorArgs extends INormalizedAddConfettiConfig {
-  initialPosition: IPosition, 
+  initialPosition: IPosition,
   direction: TConfettiDirection,
   canvasWidth: number,
 }
@@ -50,21 +50,21 @@ class ConfettiShape {
   private readonly rotationAngle: number
   private emojiSize: number
   private emojiRotationAngle: number
-  
+
   // We can calculate absolute cos and sin at shape init
   private readonly absCos: number
   private readonly absSin: number
-  
+
   private initialPosition: IPosition
   private currentPosition: IPosition
-  
+
   private readonly color: string | null
   private readonly emoji: string | null
 
   private radiusYUpdateDirection: 'up' | 'down'
 
   private readonly createdAt: number
-  
+
   private readonly direction: TConfettiDirection
 
   constructor(args: TConstructorArgs) {
@@ -79,7 +79,7 @@ class ConfettiShape {
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
-    
+
     this.confettiSpeed = {
       x: initialSpeed,
       y: initialSpeed,
@@ -100,8 +100,8 @@ class ConfettiShape {
     this.emojiRotationAngle = generateRandomNumber(0, 2 * Math.PI)
 
     this.radiusYUpdateDirection = 'down'
-    
-    const angle = direction === 'left' 
+
+    const angle = direction === 'left'
       ? generateRandomNumber(MAX_CONFETTI_ANGLE, MIN_CONFETTI_ANGLE) * Math.PI / 180
       : generateRandomNumber(-MIN_CONFETTI_ANGLE, -MAX_CONFETTI_ANGLE) * Math.PI / 180
 
@@ -126,12 +126,12 @@ class ConfettiShape {
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
-    const { 
-      currentPosition, 
-      radius, 
-      color, 
-      emoji, 
-      rotationAngle, 
+    const {
+      currentPosition,
+      radius,
+      color,
+      emoji,
+      rotationAngle,
       emojiRotationAngle,
       emojiSize,
     } = this
@@ -160,11 +160,11 @@ class ConfettiShape {
   }
 
   updatePosition(iterationTimeDelta: number, currentTime: number): void {
-    const { 
+    const {
       confettiSpeed,
       dragForceCoefficient,
       finalConfettiSpeedX,
-      radiusYUpdateDirection, 
+      radiusYUpdateDirection,
       rotationSpeed,
       createdAt,
       direction,
@@ -173,7 +173,7 @@ class ConfettiShape {
     const timeDeltaSinceCreation = currentTime - createdAt
 
     if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
-    
+
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
     this.currentPosition.y = (
@@ -195,14 +195,14 @@ class ConfettiShape {
 
     if (radiusYUpdateDirection === 'down') {
       this.radius.y -= iterationTimeDelta * rotationSpeed
-      
+
       if (this.radius.y <= 0) {
         this.radius.y = 0
         this.radiusYUpdateDirection = 'up'
       }
     } else {
       this.radius.y += iterationTimeDelta * rotationSpeed
-      
+
       if (this.radius.y >= this.initialRadius) {
         this.radius.y = this.initialRadius
         this.radiusYUpdateDirection = 'down'
