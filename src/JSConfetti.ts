@@ -27,7 +27,7 @@ class ConfettiBatch {
     if (this.shapes.length) {
       return false
     }
-    
+
     this.resolvePromise?.()
 
     return true
@@ -86,7 +86,7 @@ class JSConfetti {
 
     const currentTime = new Date().getTime()
     const timeDelta = currentTime - this.lastUpdated
-    
+
     const canvasHeight = this.canvas.offsetHeight
     const cleanupInvisibleShapes = (this.iterationIndex % 10 === 0)
 
@@ -95,7 +95,7 @@ class JSConfetti {
         { timeDelta, currentTime },
         canvasHeight,
         cleanupInvisibleShapes)
-      
+
       // Do not remove invisible shapes on every iteration
       if (!cleanupInvisibleShapes) {
         return true
@@ -147,7 +147,7 @@ class JSConfetti {
     const canvasHeight = canvasRect.height
 
     const yPosition = canvasHeight * 5 / 7
-    
+
     const leftConfettiPosition: IPosition = {
       x: 0,
       y: yPosition,
@@ -161,7 +161,7 @@ class JSConfetti {
 
     for (let i = 0; i < confettiNumber / 2; i++) {
       const confettiOnTheRight = new ConfettiShape({
-        initialPosition: leftConfettiPosition, 
+        initialPosition: leftConfettiPosition,
         direction: 'right',
         confettiRadius,
         confettiColors,
@@ -173,7 +173,7 @@ class JSConfetti {
       })
 
       const confettiOnTheLeft = new ConfettiShape({
-        initialPosition: rightConfettiPosition, 
+        initialPosition: rightConfettiPosition,
         direction: 'left',
         confettiRadius,
         confettiColors,

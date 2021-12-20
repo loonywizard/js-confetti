@@ -1,7 +1,7 @@
 function normalizeComputedStyleValue(string: string): number {
   // "250px" --> 250
   return +string.replace(/px/, '')
-} 
+}
 
 function fixDPR(canvas: HTMLCanvasElement): void {
   const dpr = window.devicePixelRatio

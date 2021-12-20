@@ -40,7 +40,6 @@ interface IAddConfettiConfig {
   emojis?: string[],
   emojiSize?: number,
   images?: IImage[],
-  
   // @deprecated: wrong plural forms were used
   emojies?: string[],
   confettiesNumber?: number
