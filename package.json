@@ -20,8 +20,8 @@
     "dev": "NODE_ENV=development webpack serve --config webpack.config.site.ts",
     "build": "rollup -c",
     "build-site": "NODE_ENV=production webpack --config webpack.config.site.ts",
-    "lint": "eslint src --ext .ts",
-    "lint-fix": "eslint src --ext .ts --fix"
+    "lint": "eslint . --ignore-pattern node_modules/ --ext .ts --ext .tsx",
+    "lint-fix": "eslint . --ignore-pattern node_modules/ --ext .ts --ext .tsx --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
