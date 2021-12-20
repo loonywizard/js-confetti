@@ -1,0 +1,2 @@
+- add pre-commit hooks: run eslint --fix
+- add CI with eslint
