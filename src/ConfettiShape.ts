@@ -228,16 +228,6 @@ class ConfettiShape {
 
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
-    this.currentPosition.x +=
-      confettiSpeed.x *
-      (direction === "left" ? -this.absCos : this.absCos) *
-      iterationTimeDelta
-
-    this.currentPosition.x +=
-      confettiSpeed.x *
-      (direction === "left" ? -this.absCos : this.absCos) *
-      iterationTimeDelta
-
     this.currentPosition.y =
       this.initialPosition.y -
       confettiSpeed.y * this.absSin * timeDeltaSinceCreation +
