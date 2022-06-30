@@ -1,7 +1,7 @@
 // Type definitions for js-confetti
 // TypeScript Version: 4.1.2
 
-export = JSConfetti;
+export default JSConfetti;
 
 interface IJSConfettiConfig {
   canvas?: HTMLCanvasElement,
