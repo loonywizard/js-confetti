@@ -6,6 +6,7 @@ import {
   DEFAULT_CONFETTI_NUMBER,
   DEFAULT_EMOJIS_NUMBER,
   DEFAULT_CONFETTI_COLORS,
+  DEFAULT_Y_POS
 } from './consts'
 
 function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalizedAddConfettiConfig {
@@ -14,15 +15,17 @@ function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalize
     confettiNumber = confettiConfig.confettiesNumber || (confettiConfig.emojis ? DEFAULT_EMOJIS_NUMBER : DEFAULT_CONFETTI_NUMBER),
     confettiColors = DEFAULT_CONFETTI_COLORS,
 
+    yPos = DEFAULT_Y_POS,
     emojis = confettiConfig.emojies || [],
     emojiSize = INITIAL_EMOJI_SIZE,
   } = confettiConfig
+
 
   // deprecate wrong plural forms, used in early releases
   if (confettiConfig.emojies) console.error(`emojies argument is deprecated, please use emojis instead`)
   if (confettiConfig.confettiesNumber) console.error(`confettiesNumber argument is deprecated, please use confettiNumber instead`)
 
-  return { confettiRadius, confettiNumber, confettiColors, emojis, emojiSize }
+  return { confettiRadius, confettiNumber, confettiColors, emojis, emojiSize, yPos }
 }
 
 export { normalizeConfettiConfig }

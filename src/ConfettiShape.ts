@@ -1,4 +1,4 @@
-import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
+import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection, IConfettiShapeArgs } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
@@ -32,12 +32,6 @@ function getWindowWidthCoefficient(canvasWidth: number) {
   return Math.log(canvasWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
-interface TConstructorArgs extends INormalizedAddConfettiConfig {
-  initialPosition: IPosition,
-  direction: TConfettiDirection,
-  canvasWidth: number,
-}
-
 class ConfettiShape {
   private confettiSpeed: ISpeed
   private rotationSpeed: number
@@ -67,7 +61,7 @@ class ConfettiShape {
 
   private readonly direction: TConfettiDirection
 
-  constructor(args: TConstructorArgs) {
+  constructor(args: IConfettiShapeArgs) {
     const {
       initialPosition,
       direction,

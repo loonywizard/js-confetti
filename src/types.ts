@@ -40,14 +40,25 @@ interface IAddConfettiConfig {
   emojis?: string[],
   emojiSize?: number,
 
+  yPos?: number | null,
+
   // @deprecated: wrong plural forms were used
   emojies?: string[],
   confettiesNumber?: number,
 }
 
-
 type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies' | 'confettiesNumber'>>
 
+interface IConfettiShapeArgs {
+	confettiRadius: number,
+	confettiNumber: number,
+	confettiColors: string[],
+	emojis: string[],
+	emojiSize: number,
+	initialPosition: IPosition,
+	direction: TConfettiDirection,
+	canvasWidth: number,
+}
 
 export {
   IPosition,
@@ -57,4 +68,5 @@ export {
   IJSConfettiConfig,
   IAddConfettiConfig,
   INormalizedAddConfettiConfig,
+  IConfettiShapeArgs
 }
