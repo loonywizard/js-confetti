@@ -1,4 +1,4 @@
-import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection, IConfettiShapeArgs } from './types'
+import { IPosition, IRadius, ISpeed, TConfettiDirection, IConfettiShapeArgs } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {

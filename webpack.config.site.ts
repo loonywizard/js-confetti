@@ -1,7 +1,7 @@
 /* eslint-env node */
 
-import { Configuration } from "webpack";
-import 'webpack-dev-server';
+import { Configuration } from "webpack"
+import 'webpack-dev-server'
 
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -41,9 +41,9 @@ const config: Configuration = {
 
 if (!isProd) {
   config.devServer = {
-  	static: {
-	    directory: path.resolve(__dirname, 'site_dist'),
-	},
+    static: {
+        directory: path.resolve(__dirname, 'site_dist'),
+    },
     compress: true,
     port: 9000
   }

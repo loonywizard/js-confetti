@@ -146,7 +146,7 @@ class JSConfetti {
     const canvasWidth = canvasRect.width
     const canvasHeight = canvasRect.height
 
-    const yPosition = (yPos === null) ? (canvasHeight * 5 / 7) : yPos;
+    const yPosition = (yPos === null) ? (canvasHeight * 5 / 7) : yPos
 
     const leftConfettiPosition: IPosition = {
       x: 0,

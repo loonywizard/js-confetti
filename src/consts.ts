@@ -36,7 +36,7 @@ const DEFAULT_CONFETTI_COLORS = [
   '#fc03c2',
 ]
 
-const DEFAULT_Y_POS = null;
+const DEFAULT_Y_POS = null
 
 export {
   FREE_FALLING_OBJECT_ACCELERATION,
