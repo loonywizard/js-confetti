@@ -190,6 +190,10 @@ class JSConfetti {
 
     return confettiGroup.getBatchCompletePromise()
   }
+
+  public clearCanvas(): void {
+    this.activeConfettiBatches = []
+  }
 }
 
 export { JSConfetti }

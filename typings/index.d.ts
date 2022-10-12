@@ -19,4 +19,5 @@ declare class JSConfetti {
   constructor(jsConfettiConfig?: IJSConfettiConfig);
 
   addConfetti(confettiConfig?: IAddConfettiConfig): Promise<void>;
+  clearCanvas(): void;
 }
