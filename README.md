@@ -110,6 +110,21 @@ jsConfetti.addConfetti({
 })
 ```
 
+## clearCanvas()
+
+Call `clearCanvas` method to clear canvas
+
+Example:
+
+```js
+const jsConfetti = new JSConfetti()
+
+jsConfetti.addConfetti()
+
+// ... 
+jsConfetti.clearCanvas()
+```
+
 ## addConfetti Promise
 
 `addConfetti` method returns Promise, which is resolved when added confetti dissapears from the user screen due to the gravity physics of confetti
