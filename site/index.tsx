@@ -36,6 +36,10 @@ function App(): JSX.Element {
       }
     }, 1000)
 
+    document.body.addEventListener('click', (event) => {
+      jsConfettiRef.current?.addConfettiAtPosition({ x: event.pageX, y: event.pageY })
+    })
+
     return () => clearTimeout(timeoutId)
   }, [])
 

@@ -45,6 +45,11 @@ interface IAddConfettiConfig {
   confettiesNumber?: number,
 }
 
+// TODO rename IAddConfettiAtPosition
+interface IAddConfettiAtPosition extends IAddConfettiConfig {
+  position: IPosition
+}
+
 
 type INormalizedAddConfettiConfig = Required<Omit<IAddConfettiConfig, 'emojies' | 'confettiesNumber'>>
 
@@ -56,5 +61,6 @@ export {
   TConfettiDirection,
   IJSConfettiConfig,
   IAddConfettiConfig,
+  IAddConfettiAtPosition,
   INormalizedAddConfettiConfig,
 }

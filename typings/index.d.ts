@@ -1,7 +1,7 @@
 // Type definitions for js-confetti
 // TypeScript Version: 4.1.2
 
-export default JSConfetti;
+export default JSConfetti
 
 interface IJSConfettiConfig {
   canvas?: HTMLCanvasElement,
@@ -14,6 +14,8 @@ interface IAddConfettiConfig {
   emojis?: string[],
   emojiSize?: number,
 }
+
+// TODO add IAddConfettiAtPosition
 
 declare class JSConfetti {
   constructor(jsConfettiConfig?: IJSConfettiConfig);
