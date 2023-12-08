@@ -194,6 +194,10 @@ class JSConfetti {
   public clearCanvas(): void {
     this.activeConfettiBatches = []
   }
+
+  public destroyCanvas(): void {
+    this.canvas.remove()
+  }
 }
 
 export { JSConfetti }
