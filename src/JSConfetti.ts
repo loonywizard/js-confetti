@@ -134,6 +134,7 @@ class JSConfetti {
       confettiColors,
       emojis,
       emojiSize,
+      yPos,
     } = normalizeConfettiConfig(confettiConfig)
 
     // Use the bounding rect rather tahn the canvas width / height, because
@@ -145,7 +146,7 @@ class JSConfetti {
     const canvasWidth = canvasRect.width
     const canvasHeight = canvasRect.height
 
-    const yPosition = canvasHeight * 5 / 7
+    const yPosition = (yPos === null) ? (canvasHeight * 5 / 7) : yPos
 
     const leftConfettiPosition: IPosition = {
       x: 0,
