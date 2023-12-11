@@ -15,6 +15,8 @@ interface IAddConfettiConfig {
   emojiSize?: number,
 }
 
+// TODO add IAddConfettiAtPosition
+
 declare class JSConfetti {
   constructor(jsConfettiConfig?: IJSConfettiConfig);
 

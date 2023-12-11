@@ -191,6 +191,10 @@ class JSConfetti {
     return confettiGroup.getBatchCompletePromise()
   }
 
+  public addConfettiAtPosition(position: IPosition): void {
+    console.log(`Add confetti at position ${position.x} ${position.y}`)
+  }
+
   public clearCanvas(): void {
     this.activeConfettiBatches = []
   }

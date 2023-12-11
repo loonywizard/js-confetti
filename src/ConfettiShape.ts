@@ -55,8 +55,10 @@ class ConfettiShape {
   private readonly absCos: number
   private readonly absSin: number
 
-  private initialPosition: IPosition
+  private readonly initialPosition: IPosition
+  private initialShiftedPosition: IPosition
   private currentPosition: IPosition
+  private shouldDisplayShape: boolean
 
   private readonly color: string | null
   private readonly emoji: string | null
@@ -80,6 +82,8 @@ class ConfettiShape {
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
 
+    this.shouldDisplayShape = false
+    this.initialPosition = initialPosition
     this.confettiSpeed = {
       x: initialSpeed,
       y: initialSpeed,
@@ -110,13 +114,13 @@ class ConfettiShape {
 
     const positionShift = generateRandomNumber(-MAX_CONFETTI_POSITION_SHIFT, 0)
 
-    const shiftedInitialPosition = {
+    const initialShiftedPosition = {
       x: initialPosition.x + (direction === 'left' ? -positionShift : positionShift) * this.absCos,
       y: initialPosition.y - positionShift * this.absSin,
     }
 
-    this.currentPosition = { ...shiftedInitialPosition }
-    this.initialPosition = { ...shiftedInitialPosition }
+    this.currentPosition = { ...initialShiftedPosition }
+    this.initialShiftedPosition = { ...initialShiftedPosition }
 
     this.color = emojis.length ? null : generateRandomArrayElement(confettiColors)
     this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
@@ -134,7 +138,11 @@ class ConfettiShape {
       rotationAngle,
       emojiRotationAngle,
       emojiSize,
+      shouldDisplayShape
     } = this
+
+    if (!shouldDisplayShape) return
+
     const dpr = window.devicePixelRatio
 
     if (color) {
@@ -177,7 +185,7 @@ class ConfettiShape {
     this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
 
     this.currentPosition.y = (
-      this.initialPosition.y
+      this.initialShiftedPosition.y
       - confettiSpeed.y * this.absSin * timeDeltaSinceCreation
       + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
     )
@@ -185,6 +193,12 @@ class ConfettiShape {
     this.rotationSpeed -= this.emoji ? 0.0001 : ROTATION_SLOWDOWN_ACCELERATION * iterationTimeDelta
 
     if (this.rotationSpeed < 0) this.rotationSpeed = 0
+
+    if (direction === 'left') {
+      if (this.currentPosition.x < this.initialPosition.x) this.shouldDisplayShape = true
+    } else {
+      if (this.currentPosition.x > this.initialPosition.x) this.shouldDisplayShape = true
+    }
 
     // no need to update rotation radius for emoji
     if (this.emoji) {
