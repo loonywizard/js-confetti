@@ -21,7 +21,7 @@ import {
 
   MAX_CONFETTI_POSITION_SHIFT,
 
-  SHAPE_VISIBILITY_TRESHOLD,
+  SHAPE_VISIBILITY_THRESHOLD,
 } from './consts'
 
 
@@ -211,7 +211,7 @@ class ConfettiShape {
   }
 
   getIsVisibleOnCanvas(canvasHeight: number): boolean {
-    return this.currentPosition.y < canvasHeight + SHAPE_VISIBILITY_TRESHOLD
+    return this.currentPosition.y < canvasHeight + SHAPE_VISIBILITY_THRESHOLD
   }
 }
 
