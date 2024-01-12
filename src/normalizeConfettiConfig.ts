@@ -15,7 +15,7 @@ function normalizeConfettiConfig(confettiConfig: IAddConfettiConfig): INormalize
     confettiColors = DEFAULT_CONFETTI_COLORS,
 
     emojis = confettiConfig.emojies || [],
-    emojiSize = INITIAL_EMOJI_SIZE,
+    emojiSize = confettiConfig.emojiSize || INITIAL_EMOJI_SIZE,
   } = confettiConfig
 
   // deprecate wrong plural forms, used in early releases
