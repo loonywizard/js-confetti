@@ -148,7 +148,7 @@ class ConfettiShape {
       )
       canvasContext.fill()
     } else if (emoji) {
-      canvasContext.font = `${emojiSize}px serif`
+      canvasContext.font = `${emojiSize * dpr}px serif`
 
       canvasContext.save()
       canvasContext.translate(dpr * currentPosition.x, dpr * currentPosition.y)
