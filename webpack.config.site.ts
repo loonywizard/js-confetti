@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import { Configuration } from 'webpack'
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
@@ -38,11 +39,13 @@ const config: Configuration = {
 }
 
 if (!isProd) {
-  config.devServer = {
-    contentBase: path.join(__dirname, 'site_dist'),
+  const devServerConfig: DevServerConfiguration = {
+    static: path.join(__dirname, 'site_dist'),
     compress: true,
     port: 9000
   }
+
+  config.devServer = devServerConfig;
 }
 
 module.exports = config
