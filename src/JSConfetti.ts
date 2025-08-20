@@ -3,6 +3,11 @@ import { ConfettiShape } from './ConfettiShape'
 import { createCanvas } from './createCanvas'
 import { normalizeConfettiConfig } from './normalizeConfettiConfig'
 import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
+import {
+  generateConfettiInitialFlightAngleFiredFromLeftSideOfTheScreen,
+  generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen,
+  generateConfettiRotationAngleFiredFromLeftSideOfTheScreen, generateConfettiRotationAngleFiredFromRightSideOfTheScreen
+} from "./generateConfettiAngles";
 
 class ConfettiBatch {
   private resolvePromise?: () => void
@@ -159,26 +164,29 @@ class JSConfetti {
     const confettiGroup = new ConfettiBatch(this.canvasContext)
 
     for (let i = 0; i < confettiNumber / 2; i++) {
-      const confettiOnTheRight = new ConfettiShape({
-        initialPosition: leftConfettiPosition,
-        direction: 'right',
-        confettiRadius,
-        confettiColors,
-        confettiNumber,
-        emojis,
-        emojiSize,
-        canvasWidth,
-      })
 
       const confettiOnTheLeft = new ConfettiShape({
-        initialPosition: rightConfettiPosition,
-        direction: 'left',
+        initialPosition: leftConfettiPosition,
         confettiRadius,
         confettiColors,
         confettiNumber,
         emojis,
         emojiSize,
         canvasWidth,
+        rotationAngle: generateConfettiRotationAngleFiredFromLeftSideOfTheScreen(),
+        initialFlightAngle: generateConfettiInitialFlightAngleFiredFromLeftSideOfTheScreen(),
+      })
+
+      const confettiOnTheRight = new ConfettiShape({
+        initialPosition: rightConfettiPosition,
+        confettiRadius,
+        confettiColors,
+        confettiNumber,
+        emojis,
+        emojiSize,
+        canvasWidth,
+        rotationAngle: generateConfettiRotationAngleFiredFromRightSideOfTheScreen(),
+        initialFlightAngle: generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen(),
       })
 
       confettiGroup.addShapes(confettiOnTheRight, confettiOnTheLeft)
