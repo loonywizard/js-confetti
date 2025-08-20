@@ -1,4 +1,4 @@
-import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed, TConfettiDirection } from './types'
+import { INormalizedAddConfettiConfig, IPosition, IRadius, ISpeed } from './types'
 import { generateRandomNumber } from './generateRandomNumber'
 import { generateRandomArrayElement } from './generateRandomArrayElement'
 import {
@@ -16,9 +16,6 @@ import {
   MIN_INITIAL_ROTATION_SPEED,
   MAX_INITIAL_ROTATION_SPEED,
 
-  MIN_CONFETTI_ANGLE,
-  MAX_CONFETTI_ANGLE,
-
   MAX_CONFETTI_POSITION_SHIFT,
 
   SHAPE_VISIBILITY_TRESHOLD,
@@ -34,7 +31,8 @@ function getWindowWidthCoefficient(canvasWidth: number) {
 
 interface TConstructorArgs extends INormalizedAddConfettiConfig {
   initialPosition: IPosition,
-  direction: TConfettiDirection,
+  initialFlightAngle: number,
+  rotationAngle: number,
   canvasWidth: number,
 }
 
@@ -51,9 +49,8 @@ class ConfettiShape {
   private emojiSize: number
   private emojiRotationAngle: number
 
-  // We can calculate absolute cos and sin at shape init
-  private readonly absCos: number
-  private readonly absSin: number
+  private readonly cos: number
+  private readonly sin: number
 
   private initialPosition: IPosition
   private currentPosition: IPosition
@@ -65,17 +62,16 @@ class ConfettiShape {
 
   private readonly createdAt: number
 
-  private readonly direction: TConfettiDirection
-
   constructor(args: TConstructorArgs) {
     const {
       initialPosition,
-      direction,
       confettiRadius,
       confettiColors,
       emojis,
       emojiSize,
       canvasWidth,
+      initialFlightAngle,
+      rotationAngle,
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
@@ -95,24 +91,20 @@ class ConfettiShape {
       x: confettiRadius, y: confettiRadius
     }
     this.initialRadius = confettiRadius
-    this.rotationAngle = direction === 'left'  ? generateRandomNumber(0, 0.2, 3) : generateRandomNumber(-0.2, 0, 3)
+    this.rotationAngle = rotationAngle
     this.emojiSize = emojiSize
     this.emojiRotationAngle = generateRandomNumber(0, 2 * Math.PI)
 
     this.radiusYUpdateDirection = 'down'
 
-    const angle = direction === 'left'
-      ? generateRandomNumber(MAX_CONFETTI_ANGLE, MIN_CONFETTI_ANGLE) * Math.PI / 180
-      : generateRandomNumber(-MIN_CONFETTI_ANGLE, -MAX_CONFETTI_ANGLE) * Math.PI / 180
-
-    this.absCos = Math.abs(Math.cos(angle))
-    this.absSin = Math.abs(Math.sin(angle))
+    this.cos = Math.cos(initialFlightAngle)
+    this.sin = Math.sin(initialFlightAngle)
 
     const positionShift = generateRandomNumber(-MAX_CONFETTI_POSITION_SHIFT, 0)
 
     const shiftedInitialPosition = {
-      x: initialPosition.x + (direction === 'left' ? -positionShift : positionShift) * this.absCos,
-      y: initialPosition.y - positionShift * this.absSin,
+      x: initialPosition.x + positionShift * this.sin,
+      y: initialPosition.y - positionShift * this.cos,
     }
 
     this.currentPosition = { ...shiftedInitialPosition }
@@ -122,7 +114,6 @@ class ConfettiShape {
     this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
 
     this.createdAt = new Date().getTime()
-    this.direction = direction
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
@@ -167,18 +158,17 @@ class ConfettiShape {
       radiusYUpdateDirection,
       rotationSpeed,
       createdAt,
-      direction,
     } = this
 
     const timeDeltaSinceCreation = currentTime - createdAt
 
     if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
 
-    this.currentPosition.x += confettiSpeed.x * (direction === 'left' ? -this.absCos : this.absCos) * iterationTimeDelta
+    this.currentPosition.x += confettiSpeed.x * this.sin * iterationTimeDelta
 
     this.currentPosition.y = (
       this.initialPosition.y
-      - confettiSpeed.y * this.absSin * timeDeltaSinceCreation
+      - confettiSpeed.y * this.cos * timeDeltaSinceCreation
       + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
     )
 

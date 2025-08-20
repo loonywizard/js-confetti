@@ -12,13 +12,6 @@ type IRadius = I2DCoordinates
 
 type ISpeed = I2DCoordinates
 
-
-/*
- * Direction, in which confetti is moving
- */
-type TConfettiDirection = 'left' | 'right'
-
-
 /*
  * Arguments object for JSConfetti constructor
  */
@@ -53,7 +46,6 @@ export {
   IPosition,
   IRadius,
   ISpeed,
-  TConfettiDirection,
   IJSConfettiConfig,
   IAddConfettiConfig,
   INormalizedAddConfettiConfig,
