@@ -34,7 +34,7 @@ function getWindowWidthCoefficient(canvasWidth: number) {
 
 interface TConstructorArgs extends INormalizedAddConfettiConfig {
   initialPosition: IPosition,
-  direction: TConfettiDirection,
+  direction?: TConfettiDirection,
   canvasWidth: number,
 }
 
@@ -65,7 +65,7 @@ class ConfettiShape {
 
   private readonly createdAt: number
 
-  private readonly direction: TConfettiDirection
+  private readonly direction?: TConfettiDirection
 
   constructor(args: TConstructorArgs) {
     const {

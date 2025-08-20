@@ -14,7 +14,7 @@ type ISpeed = I2DCoordinates
 
 
 /*
- * Direction, in which confetti is moving
+ * Direction, in which confetti is moving when fired from both sides of the screen
  */
 type TConfettiDirection = 'left' | 'right'
 
@@ -39,6 +39,10 @@ interface IAddConfettiConfig {
   // confettiColors will be ignored if emojis array provided
   emojis?: string[],
   emojiSize?: number,
+
+  // if provided, confetti would be fired from specified position on the screen,
+  // otherwise they would be fired from the sides of the screen (default behaviour)
+  confettiDispatchPosition?: IPosition[] | null,
 
   // @deprecated: wrong plural forms were used
   emojies?: string[],

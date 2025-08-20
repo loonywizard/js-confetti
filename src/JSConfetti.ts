@@ -127,6 +127,19 @@ class JSConfetti {
     requestAnimationFrame(this.loop)
   }
 
+  // under development and testing :)
+  public __DO_NOT_USE__addConfettiAtPosition(confettiConfig: IAddConfettiConfig = {}): void {
+    const {
+      confettiRadius,
+      confettiNumber,
+      confettiColors,
+      emojis,
+      emojiSize,
+      confettiDispatchPosition,
+    } = normalizeConfettiConfig(confettiConfig)
+  }
+
+  // not working with confettiDispatchPosition yet
   public addConfetti(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
     const {
       confettiRadius,
@@ -168,6 +181,7 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
+        confettiDispatchPosition: null,
       })
 
       const confettiOnTheLeft = new ConfettiShape({
@@ -179,6 +193,7 @@ class JSConfetti {
         emojis,
         emojiSize,
         canvasWidth,
+        confettiDispatchPosition: null,
       })
 
       confettiGroup.addShapes(confettiOnTheRight, confettiOnTheLeft)
