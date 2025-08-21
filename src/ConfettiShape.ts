@@ -29,11 +29,12 @@ function getWindowWidthCoefficient(canvasWidth: number) {
   return Math.log(canvasWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
-interface TConstructorArgs extends INormalizedAddConfettiConfig {
+interface TConstructorArgs extends Omit<INormalizedAddConfettiConfig, '__DO_NOT_USE__confettiDispatchPosition'> {
   initialPosition: IPosition,
   initialFlightAngle: number,
   rotationAngle: number,
   canvasWidth: number,
+  __DO_NOT_USE__shouldHideConfettiInShiftedPosition?: boolean,
 }
 
 class ConfettiShape {
@@ -52,6 +53,9 @@ class ConfettiShape {
   private readonly cos: number
   private readonly sin: number
 
+  // initial position passed as an argument
+  private dispatchPosition: IPosition
+  // shifted position from which confetti starts flying
   private initialPosition: IPosition
   private currentPosition: IPosition
 
@@ -61,6 +65,11 @@ class ConfettiShape {
   private radiusYUpdateDirection: 'up' | 'down'
 
   private readonly createdAt: number
+
+  // when confetti is dispatched, it has random shifted position from the initial position
+  // it is done for aesthetic purposes to create an effect that confetti takes some random time to be dispatched
+  // we need to hide confetti until it has reached its initial position
+  private isVisible: boolean
 
   constructor(args: TConstructorArgs) {
     const {
@@ -72,6 +81,7 @@ class ConfettiShape {
       canvasWidth,
       initialFlightAngle,
       rotationAngle,
+      __DO_NOT_USE__shouldHideConfettiInShiftedPosition = false
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
@@ -107,6 +117,7 @@ class ConfettiShape {
       y: initialPosition.y - positionShift * this.cos,
     }
 
+    this.dispatchPosition = { ...initialPosition }
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
@@ -114,6 +125,7 @@ class ConfettiShape {
     this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
 
     this.createdAt = new Date().getTime()
+    this.isVisible = !__DO_NOT_USE__shouldHideConfettiInShiftedPosition
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {
@@ -125,7 +137,11 @@ class ConfettiShape {
       rotationAngle,
       emojiRotationAngle,
       emojiSize,
+      isVisible,
     } = this
+
+    if (!isVisible) return
+
     const dpr = window.devicePixelRatio
 
     if (color) {
@@ -171,6 +187,11 @@ class ConfettiShape {
       - confettiSpeed.y * this.cos * timeDeltaSinceCreation
       + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
     )
+
+    // assuming that confetti are always dispatched up
+    if (this.currentPosition.y <= this.dispatchPosition.y) {
+      this.isVisible = true
+    }
 
     this.rotationSpeed -= this.emoji ? 0.0001 : ROTATION_SLOWDOWN_ACCELERATION * iterationTimeDelta
 

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, {useCallback, useEffect, useRef} from 'react'
 
 import JSConfetti from '../src/index'
 import { generateRandomArrayElement  } from '../src/generateRandomArrayElement'
@@ -7,6 +7,7 @@ import { IAddConfettiConfig } from '../src/types'
 
 
 const CONFETTI_ARGS: IAddConfettiConfig[] = [
+  // empty object is for default values
   {},
   { confettiRadius: 12, confettiNumber: 100 },
   { emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'] },
@@ -26,6 +27,7 @@ const CONFETTI_ARGS: IAddConfettiConfig[] = [
 
 function App(): JSX.Element {
   const jsConfettiRef = useRef<JSConfetti>()
+  const clickMeButtonRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     jsConfettiRef.current = new JSConfetti()
@@ -45,10 +47,25 @@ function App(): JSX.Element {
     }
   }, [jsConfettiRef])
 
+  // early prototype, only to be used for testing for now in DEV mode
+  const onContainerClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (event.target !== clickMeButtonRef.current) {
+        jsConfettiRef.current?.__DO_NOT_USE_THIS_IS_UNDER_DEVELOPMENT__addConfettiAtPosition({
+          ...generateRandomArrayElement(CONFETTI_ARGS),
+          __DO_NOT_USE__confettiDispatchPosition: {
+            x: event.clientX,
+            y: event.clientY
+          }
+        },)
+      }
+    }
+  }, [jsConfettiRef])
+
   return (
-    <>
-      <button className="button" onClick={onButtonClick}>Click me!</button>
-    </>
+    <div className="container" onClick={onContainerClick}>
+      <button className="button" onClick={onButtonClick} ref={clickMeButtonRef}>Click me!</button>
+    </div>
   )
 }
 

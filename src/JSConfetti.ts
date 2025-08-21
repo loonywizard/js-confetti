@@ -6,8 +6,10 @@ import { IPosition, IJSConfettiConfig, IAddConfettiConfig } from './types'
 import {
   generateConfettiInitialFlightAngleFiredFromLeftSideOfTheScreen,
   generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen,
-  generateConfettiRotationAngleFiredFromLeftSideOfTheScreen, generateConfettiRotationAngleFiredFromRightSideOfTheScreen
-} from "./generateConfettiAngles";
+  generateConfettiInitialFlightAngleFiredFromSpecificPosition,
+  generateConfettiRotationAngleFiredFromLeftSideOfTheScreen,
+  generateConfettiRotationAngleFiredFromRightSideOfTheScreen
+} from "./generateConfettiAngles"
 
 class ConfettiBatch {
   private resolvePromise?: () => void
@@ -132,6 +134,45 @@ class JSConfetti {
     requestAnimationFrame(this.loop)
   }
 
+  public __DO_NOT_USE_THIS_IS_UNDER_DEVELOPMENT__addConfettiAtPosition(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
+    const {
+      confettiRadius,
+      confettiNumber,
+      confettiColors,
+      emojis,
+      emojiSize,
+      __DO_NOT_USE__confettiDispatchPosition,
+    } = normalizeConfettiConfig(confettiConfig)
+
+    const {width: canvasWidth} = this.canvas.getBoundingClientRect()
+
+    const confettiGroup = new ConfettiBatch(this.canvasContext)
+
+
+    for (let i = 0; i < confettiNumber; i++) {
+      const confettiShape = new ConfettiShape({
+        initialPosition: __DO_NOT_USE__confettiDispatchPosition as IPosition,
+        confettiRadius,
+        confettiColors,
+        confettiNumber,
+        emojis,
+        emojiSize,
+        canvasWidth,
+        rotationAngle: generateConfettiRotationAngleFiredFromLeftSideOfTheScreen(),
+        initialFlightAngle: generateConfettiInitialFlightAngleFiredFromSpecificPosition(),
+        __DO_NOT_USE__shouldHideConfettiInShiftedPosition: true,
+      })
+
+      confettiGroup.addShapes(confettiShape)
+    }
+
+    this.activeConfettiBatches.push(confettiGroup)
+
+    this.queueAnimationFrameIfNeeded()
+
+    return confettiGroup.getBatchCompletePromise()
+  }
+
   public addConfetti(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
     const {
       confettiRadius,
@@ -146,9 +187,7 @@ class JSConfetti {
     // confetti being immediately queued on a page load, this hasn't happened so
     // the default of 300x150 will be returned, causing an improper source point
     // for the confetti animation.
-    const canvasRect = this.canvas.getBoundingClientRect()
-    const canvasWidth = canvasRect.width
-    const canvasHeight = canvasRect.height
+    const {width: canvasWidth, height: canvasHeight} = this.canvas.getBoundingClientRect()
 
     const yPosition = canvasHeight * 5 / 7
 
