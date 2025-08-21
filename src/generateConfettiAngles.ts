@@ -10,7 +10,7 @@ function convertDegreesToRadians(degreesToRadians: number) {
  * determine the angle at which confetti is being dispatched
  *
  * for confetti that are dispatched from the sides of the screen, there's a min and max angle at which they could fly
- * for confetti that are dispatched from the specific location (like mouse click), the angle ranges from -max to max
+ * for confetti that are dispatched from the specific position (like mouse click), the angle ranges from -max to max
  *
  * the angle is stored in radians, but degrees are used in constants for convenience
  *
@@ -24,6 +24,10 @@ function generateConfettiInitialFlightAngleFiredFromLeftSideOfTheScreen() {
 
 function generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen() {
   return convertDegreesToRadians(generateRandomNumber(-MIN_CONFETTI_ANGLE_IN_DEGREES, -MAX_CONFETTI_ANGLE_IN_DEGREES))
+}
+
+function generateConfettiInitialFlightAngleFiredFromSpecificPosition() {
+  return convertDegreesToRadians(generateRandomNumber(-MAX_CONFETTI_ANGLE_IN_DEGREES, MAX_CONFETTI_ANGLE_IN_DEGREES))
 }
 
 /*
@@ -41,6 +45,7 @@ function generateConfettiRotationAngleFiredFromRightSideOfTheScreen() {
 export {
   generateConfettiInitialFlightAngleFiredFromLeftSideOfTheScreen,
   generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen,
+  generateConfettiInitialFlightAngleFiredFromSpecificPosition,
 
   generateConfettiRotationAngleFiredFromLeftSideOfTheScreen,
   generateConfettiRotationAngleFiredFromRightSideOfTheScreen,
