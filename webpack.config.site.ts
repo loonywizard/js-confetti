@@ -45,7 +45,7 @@ if (!isProd) {
     port: 9000
   }
 
-  config.devServer = devServerConfig;
+  config.devServer = devServerConfig
 }
 
 module.exports = config
