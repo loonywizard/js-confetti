@@ -110,6 +110,23 @@ jsConfetti.addConfetti({
 })
 ```
 
+## addConfettiAtPosition
+
+example with dispatching confetti on mouse click - 
+take X and Y position of the mouse from event and 
+pass them in `confettiDispatchPosition` param.
+
+all customisations work in this method as well!
+
+```js
+jsConfettiRef.addConfettiAtPosition({
+  confettiDispatchPosition: {
+    x: event.clientX,
+    y: event.clientY
+  }
+})
+```
+
 ## clearCanvas()
 
 Call `clearCanvas` method to clear canvas
