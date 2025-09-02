@@ -134,14 +134,14 @@ class JSConfetti {
     requestAnimationFrame(this.loop)
   }
 
-  public __DO_NOT_USE_THIS_IS_UNDER_DEVELOPMENT__addConfettiAtPosition(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
+  public addConfettiAtPosition(confettiConfig: IAddConfettiConfig = {}): Promise<void> {
     const {
       confettiRadius,
       confettiNumber,
       confettiColors,
       emojis,
       emojiSize,
-      __DO_NOT_USE__confettiDispatchPosition,
+      confettiDispatchPosition,
     } = normalizeConfettiConfig(confettiConfig)
 
     const {width: canvasWidth} = this.canvas.getBoundingClientRect()
@@ -151,7 +151,7 @@ class JSConfetti {
 
     for (let i = 0; i < confettiNumber; i++) {
       const confettiShape = new ConfettiShape({
-        initialPosition: __DO_NOT_USE__confettiDispatchPosition as IPosition,
+        initialPosition: confettiDispatchPosition as IPosition,
         confettiRadius,
         confettiColors,
         confettiNumber,
@@ -160,7 +160,7 @@ class JSConfetti {
         canvasWidth,
         rotationAngle: generateConfettiRotationAngleFiredFromLeftSideOfTheScreen(),
         initialFlightAngle: generateConfettiInitialFlightAngleFiredFromSpecificPosition(),
-        __DO_NOT_USE__shouldHideConfettiInShiftedPosition: true,
+        shouldHideConfettiInShiftedPosition: true,
       })
 
       confettiGroup.addShapes(confettiShape)
