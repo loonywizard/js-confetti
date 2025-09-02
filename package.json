@@ -1,6 +1,6 @@
 {
   "name": "js-confetti",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "license": "MIT",
   "description": "JS Confetti library with zero dependencies, works without any config, TS typings included, adapts to user screen",
   "main": "dist/js-confetti.min.js",
