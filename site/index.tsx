@@ -49,16 +49,14 @@ function App(): JSX.Element {
 
   // early prototype, only to be used for testing for now in DEV mode
   const onContainerClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (process.env.NODE_ENV !== 'production') {
       if (event.target !== clickMeButtonRef.current) {
-        jsConfettiRef.current?.__DO_NOT_USE_THIS_IS_UNDER_DEVELOPMENT__addConfettiAtPosition({
-          ...generateRandomArrayElement(CONFETTI_ARGS),
-          __DO_NOT_USE__confettiDispatchPosition: {
-            x: event.clientX,
-            y: event.clientY
-          }
-        },)
-      }
+      jsConfettiRef.current?.addConfettiAtPosition({
+        ...generateRandomArrayElement(CONFETTI_ARGS),
+        confettiDispatchPosition: {
+          x: event.clientX,
+          y: event.clientY
+        }
+      })
     }
   }, [jsConfettiRef])
 

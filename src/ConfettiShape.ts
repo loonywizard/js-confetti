@@ -29,12 +29,12 @@ function getWindowWidthCoefficient(canvasWidth: number) {
   return Math.log(canvasWidth) / Math.log(HD_SCREEN_WIDTH)
 }
 
-interface TConstructorArgs extends Omit<INormalizedAddConfettiConfig, '__DO_NOT_USE__confettiDispatchPosition'> {
+interface TConstructorArgs extends Omit<INormalizedAddConfettiConfig, 'confettiDispatchPosition'> {
   initialPosition: IPosition,
   initialFlightAngle: number,
   rotationAngle: number,
   canvasWidth: number,
-  __DO_NOT_USE__shouldHideConfettiInShiftedPosition?: boolean,
+  shouldHideConfettiInShiftedPosition?: boolean,
 }
 
 class ConfettiShape {
@@ -81,7 +81,7 @@ class ConfettiShape {
       canvasWidth,
       initialFlightAngle,
       rotationAngle,
-      __DO_NOT_USE__shouldHideConfettiInShiftedPosition = false
+      shouldHideConfettiInShiftedPosition = false
     } = args
     const randomConfettiSpeed = generateRandomNumber(MIN_INITIAL_CONFETTI_SPEED, MAX_INITIAL_CONFETTI_SPEED, 3)
     const initialSpeed = randomConfettiSpeed * getWindowWidthCoefficient(canvasWidth)
@@ -130,7 +130,7 @@ class ConfettiShape {
     this.emoji = emojis.length ? generateRandomArrayElement(emojis) : null
 
     this.createdAt = new Date().getTime()
-    this.isVisible = !__DO_NOT_USE__shouldHideConfettiInShiftedPosition
+    this.isVisible = !shouldHideConfettiInShiftedPosition
   }
 
   draw(canvasContext: CanvasRenderingContext2D): void {

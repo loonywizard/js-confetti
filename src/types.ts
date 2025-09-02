@@ -36,7 +36,7 @@ interface IAddConfettiConfig {
 
   // if provided, confetti would be fired from specified position on the screen,
   // otherwise they would be fired from the sides of the screen (default behaviour)
-  __DO_NOT_USE__confettiDispatchPosition?: IPosition | null,
+  confettiDispatchPosition?: IPosition | null,
 
   // @deprecated: wrong plural forms were used
   emojies?: string[],
@@ -50,7 +50,7 @@ type INormalizedAddConfettiConfig = {
   confettiColors: string[],
   emojis: string[],
   emojiSize: number,
-  __DO_NOT_USE__confettiDispatchPosition?: IPosition | null,
+  confettiDispatchPosition?: IPosition | null,
 }
 
 
