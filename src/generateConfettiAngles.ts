@@ -1,5 +1,9 @@
 import {generateRandomNumber} from "./generateRandomNumber"
-import {MAX_CONFETTI_ANGLE_IN_DEGREES, MIN_CONFETTI_ANGLE_IN_DEGREES} from "./consts"
+import {
+  MAX_CONFETTI_ANGLE_IN_DEGREES,
+  MIN_CONFETTI_ANGLE_IN_DEGREES,
+  MAX_CONFETTI_ANGLE_FIRED_FROM_SPEICIFIED_POSITION_IN_DEGREES
+} from "./consts"
 
 
 function convertDegreesToRadians(degreesToRadians: number) {
@@ -27,7 +31,10 @@ function generateConfettiInitialFlightAngleFiredFromRightSideOfTheScreen() {
 }
 
 function generateConfettiInitialFlightAngleFiredFromSpecificPosition() {
-  return convertDegreesToRadians(generateRandomNumber(-MAX_CONFETTI_ANGLE_IN_DEGREES, MAX_CONFETTI_ANGLE_IN_DEGREES))
+  return convertDegreesToRadians(
+    generateRandomNumber(
+      -MAX_CONFETTI_ANGLE_FIRED_FROM_SPEICIFIED_POSITION_IN_DEGREES,
+      MAX_CONFETTI_ANGLE_FIRED_FROM_SPEICIFIED_POSITION_IN_DEGREES))
 }
 
 /*
