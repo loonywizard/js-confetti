@@ -53,8 +53,6 @@ class ConfettiShape {
   private readonly cos: number
   private readonly sin: number
 
-  // initial position passed as an argument
-  private dispatchPosition: IPosition
   // shifted position from which confetti starts flying
   private initialPosition: IPosition
   private currentPosition: IPosition
@@ -70,6 +68,8 @@ class ConfettiShape {
   // it is done for aesthetic purposes to create an effect that confetti takes some random time to be dispatched
   // we need to hide confetti until it has reached its initial position
   private isVisible: boolean
+  private positionOffset: IPosition
+  private distanceTravelled: IPosition
 
   constructor(args: TConstructorArgs) {
     const {
@@ -112,12 +112,17 @@ class ConfettiShape {
 
     const positionShift = generateRandomNumber(-MAX_CONFETTI_POSITION_SHIFT, 0)
 
+    this.positionOffset = {
+      x: positionShift * this.sin,
+      y: positionShift * this.cos,
+    }
+    this.distanceTravelled = {x:0, y:0}
+
     const shiftedInitialPosition = {
-      x: initialPosition.x + positionShift * this.sin,
-      y: initialPosition.y - positionShift * this.cos,
+      x: initialPosition.x + this.positionOffset.x,
+      y: initialPosition.y - this.positionOffset.y,
     }
 
-    this.dispatchPosition = { ...initialPosition }
     this.currentPosition = { ...shiftedInitialPosition }
     this.initialPosition = { ...shiftedInitialPosition }
 
@@ -166,7 +171,7 @@ class ConfettiShape {
     }
   }
 
-  updatePosition(iterationTimeDelta: number, currentTime: number): void {
+  updatePosition(iterationTimeDelta: number,  currentTime: number): void {
     const {
       confettiSpeed,
       dragForceCoefficient,
@@ -176,20 +181,27 @@ class ConfettiShape {
       createdAt,
     } = this
 
-    const timeDeltaSinceCreation = currentTime - createdAt
-
     if (confettiSpeed.x > finalConfettiSpeedX) this.confettiSpeed.x -= dragForceCoefficient * iterationTimeDelta
 
-    this.currentPosition.x += confettiSpeed.x * this.sin * iterationTimeDelta
+    const prevPositionY = this.currentPosition.y
 
-    this.currentPosition.y = (
+    const timeDeltaSinceCreation = currentTime - createdAt
+    this.currentPosition.y =
       this.initialPosition.y
       - confettiSpeed.y * this.cos * timeDeltaSinceCreation
       + FREE_FALLING_OBJECT_ACCELERATION * (timeDeltaSinceCreation ** 2) / 2
-    )
 
-    // assuming that confetti are always dispatched up
-    if (this.currentPosition.y <= this.dispatchPosition.y) {
+    const positionUpdate = {
+      x: confettiSpeed.x * this.sin * iterationTimeDelta,
+      y: this.currentPosition.y - prevPositionY
+    }
+
+    this.currentPosition.x += positionUpdate.x
+
+    this.distanceTravelled.x += Math.abs(positionUpdate.x)
+    this.distanceTravelled.y += Math.abs(positionUpdate.y)
+
+    if (this.distanceTravelled.x >= Math.abs(this.positionOffset.x) && this.distanceTravelled.y >= Math.abs(this.positionOffset.y)) {
       this.isVisible = true
     }
 
